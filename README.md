@@ -21,3 +21,14 @@ As developers we want to build this application to support business owners, in m
 ## Technical Description
 
 ## Summary Table for User Stories
+
+| Priority | User | Description | Technical Implementation | 
+| --- | ------------------ | --------------------------- | -------------- |
+| P0  | As a User | I want to be able to create an account and log into/out of it. | When logging in, use Azure Authentication to authenticate users, and place them into our database.| 
+
+
+
+
+
+
+
