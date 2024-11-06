@@ -1,5 +1,6 @@
-# Group 8 Final Project
-This is the INFO 441 final project proposal for Group 8
+# Group 8's Final Project Proposal
+This is the INFO 441 final project proposal for Group 8.
+By: Anthony Wen, Jasmine Wong, Hyejin Park, Michaelangelo Labrador
 
 ## Project Description
 
