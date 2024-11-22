@@ -6,6 +6,7 @@ import logger from 'morgan';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import sessions from 'express-session'
+import models from './models.js'
 
 import WebAppAuthProvider from 'msal-node-wrapper'
 
@@ -53,6 +54,11 @@ app.use(sessions({
 
 const authProvider = await WebAppAuthProvider.WebAppAuthProvider.initialize(authConfig);
 app.use(authProvider.authenticate());
+
+app.use((req, res, next) => {
+    req.models = models
+    next()
+})
 
 app.use('/api', apiRouter);
 

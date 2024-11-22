@@ -8,8 +8,6 @@ await mongoose.connect('mongodb+srv://mikelabz:1234@cluster0.kxlma.mongodb.net/E
 
 console.log("successfully connected to mongodb")
 
-models.Business = mongoose.model('Business', businessSchema)
-
 const businessSchema = new mongoose.Schema({
     businessName: String, 
     // employees: {type: mongoose.Schema.Types.ObjectId, ref: "Employee"},
@@ -28,9 +26,9 @@ console.log("business models created")
 //     earnings: Number
 // })
 
-models.Employee = mongoose.model('Employee', employeeSchema)
+// models.Employee = mongoose.model('Employee', employeeSchema)
 
-console.log("employee models created")
+// console.log("employee models created")
 
 
 
