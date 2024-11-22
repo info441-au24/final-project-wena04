@@ -11,6 +11,7 @@ async function addBusiness() {
             method: "POST", 
             body: {businessName: businessName}
         })
+        console.log("response received. successfully saved business")
     } catch (error) {
         console.log(error)
     }
