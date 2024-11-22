@@ -5,11 +5,8 @@ import logger from 'morgan';
 
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
-
-import apiRouter from './routes/api/api.js'
-import usersRouter from './routes/api/users.js';
-
 import sessions from 'express-session'
+
 import WebAppAuthProvider from 'msal-node-wrapper'
 
 const authConfig = {
@@ -29,6 +26,9 @@ const authConfig = {
         }
     }
 };
+
+import apiRouter from './routes/api/api.js'
+
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -55,8 +55,6 @@ const authProvider = await WebAppAuthProvider.WebAppAuthProvider.initialize(auth
 app.use(authProvider.authenticate());
 
 app.use('/api', apiRouter);
-app.use('/users', usersRouter);
-
 
 app.get('/signin', (req, res, next) => {
     return req.authContext.login({
