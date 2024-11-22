@@ -13,7 +13,8 @@ async function addBusiness() {
         })
         console.log("response received. successfully saved business")
     } catch (error) {
-        console.log(error)
+        document.getElementById("postStatus").innerText = "Error"
+        throw(error)
     }
 
     
