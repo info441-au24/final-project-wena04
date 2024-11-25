@@ -1,38 +1,35 @@
-import mongoose from 'mongoose'
+import mongoose from "mongoose";
 
-let models = {}
+let models = {};
 
-console.log("connecting to mongodb")
+console.log("connecting to mongodb");
 
-await mongoose.connect('mongodb+srv://mikelabz:1234@cluster0.kxlma.mongodb.net/EMT?retryWrites=true&w=majority&appName=Cluster0')
+await mongoose.connect(
+  "mongodb+srv://root:info441@cluster0.vnmb0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+);
 
-console.log("successfully connected to mongodb")
+console.log("successfully connected to mongodb");
 
 const businessSchema = new mongoose.Schema({
-    businessName: String, 
-    // employees: {type: mongoose.Schema.Types.ObjectId, ref: "Employee"},
-    // earnings: Number
-})
+  businessName: String,
+  employees: { type: mongoose.Schema.Types.ObjectId, ref: "Employee" },
+  earnings: Number,
+});
 
-models.Business = mongoose.model('Business', businessSchema)
+models.Business = mongoose.model("Business", businessSchema);
 
-console.log("business models created")
+console.log("business models created");
 
-// const employeeSchema = new mongoose.Schema({
-//     firstName: String,
-//     secondName: String, 
-//     hoursWorked: Number, 
-//     hourlyWage: Number, 
-//     earnings: Number
-// })
+const employeeSchema = new mongoose.Schema({
+  firstName: String,
+  secondName: String,
+  hoursWorked: Number,
+  hourlyWage: Number,
+  earnings: Number,
+});
 
-// models.Employee = mongoose.model('Employee', employeeSchema)
+models.Employee = mongoose.model("Employee", employeeSchema);
 
-// console.log("employee models created")
+console.log("employee models created");
 
-
-
-
-
-
-export default models
+export default models;
