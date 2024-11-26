@@ -1,11 +1,10 @@
-import express from'express';
+import express from "express";
 var router = express.Router();
 
-import businessRouter from './controllers/business.js'
-import usersRouter from './controllers/users.js';
+import businessRouter from "./controllers/business.js";
+import usersRouter from "./controllers/users.js";
 
-router.use('/business', businessRouter)
-router.use('/usersRouter', usersRouter)
-
+router.use("/business", businessRouter);
+router.use("/users", usersRouter);
 
 export default router;
