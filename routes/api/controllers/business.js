@@ -1,112 +1,130 @@
 import express from "express";
 var router = express.Router();
 
-// GET all businesses
-router.get("/", async (req, res) => {
+// GET business names
+router.get("/names", async (req, res) => {
   try {
-    const businesses = await req.models.Business.find().populate("employees");
+    // Fetch only the `businessName` field
+    const businesses = await req.models.Business.find({}, "businessName");
+    console.log("Fetched business names:", businesses); // Debug log
 
-    console.log("Fetched all businesses:", businesses.length); // Debug log
+    // Map only business names into an array
+    const businessNames = businesses.map((business) => business.businessName);
 
-    const businessData = businesses.map((business) => ({
-      id: business._id,
-      businessName: business.businessName,
-      earnings: business.earnings,
-      employees: business.employees.map((employee) => ({
-        id: employee._id,
-        firstName: employee.firstName,
-        secondName: employee.secondName,
-        hoursWorked: employee.hoursWorked,
-        hourlyWage: employee.hourlyWage,
-        earnings: employee.earnings,
-      })),
-    }));
-
-    res.json(businessData);
+    // Return the array of business names as JSON
+    res.json(businessNames);
   } catch (error) {
-    console.error("Error fetching businesses:", error);
+    console.error("Error fetching business names:", error);
     res.status(500).json({ status: "error", error: error.message });
   }
 });
 
-// GET a specific business by ID
-router.get("/:businessId", async (req, res) => {
-  try {
-    const { businessId } = req.params;
+// // GET all businesses
+// router.get("/", async (req, res) => {
+//   try {
+//     const businesses = await req.models.Business.find().populate("employees");
 
-    const business = await req.models.Business.findById(businessId).populate(
-      "employees"
-    );
+//     console.log("Fetched all businesses:", businesses.length); // Debug log
 
-    if (!business) {
-      return res
-        .status(404)
-        .json({ status: "error", error: "Business not found" });
-    }
+//     const businessData = businesses.map((business) => ({
+//       id: business._id,
+//       businessName: business.businessName,
+//       earnings: business.earnings,
+//       employees: business.employees.map((employee) => ({
+//         id: employee._id,
+//         firstName: employee.firstName,
+//         secondName: employee.secondName,
+//         hoursWorked: employee.hoursWorked,
+//         hourlyWage: employee.hourlyWage,
+//         earnings: employee.earnings,
+//       })),
+//     }));
 
-    console.log("Fetched business:", business.businessName); // Debug log
+//     res.json(businessData);
+//   } catch (error) {
+//     console.error("Error fetching businesses:", error);
+//     res.status(500).json({ status: "error", error: error.message });
+//   }
+// });
 
-    const businessData = {
-      id: business._id,
-      businessName: business.businessName,
-      earnings: business.earnings,
-      employees: business.employees.map((employee) => ({
-        id: employee._id,
-        firstName: employee.firstName,
-        secondName: employee.secondName,
-        hoursWorked: employee.hoursWorked,
-        hourlyWage: employee.hourlyWage,
-        earnings: employee.earnings,
-      })),
-    };
+// // GET a specific business by ID
+// router.get("/:businessId", async (req, res) => {
+//   try {
+//     const { businessId } = req.params;
 
-    res.json(businessData);
-  } catch (error) {
-    console.error("Error fetching business by ID:", error);
-    res.status(500).json({ status: "error", error: error.message });
-  }
-});
+//     const business = await req.models.Business.findById(businessId).populate(
+//       "employees"
+//     );
 
-// GET businesses filtered by minimum earnings
-router.get("/filter/by-earnings", async (req, res) => {
-  try {
-    const { minEarnings } = req.query;
+//     if (!business) {
+//       return res
+//         .status(404)
+//         .json({ status: "error", error: "Business not found" });
+//     }
 
-    if (!minEarnings || isNaN(minEarnings)) {
-      return res
-        .status(400)
-        .json({ status: "error", error: "Invalid or missing minEarnings" });
-    }
+//     console.log("Fetched business:", business.businessName); // Debug log
 
-    const businesses = await req.models.Business.find({
-      earnings: { $gte: parseFloat(minEarnings) },
-    }).populate("employees");
+//     const businessData = {
+//       id: business._id,
+//       businessName: business.businessName,
+//       earnings: business.earnings,
+//       employees: business.employees.map((employee) => ({
+//         id: employee._id,
+//         firstName: employee.firstName,
+//         secondName: employee.secondName,
+//         hoursWorked: employee.hoursWorked,
+//         hourlyWage: employee.hourlyWage,
+//         earnings: employee.earnings,
+//       })),
+//     };
 
-    console.log(
-      `Fetched businesses with earnings >= ${minEarnings}:`,
-      businesses.length
-    );
+//     res.json(businessData);
+//   } catch (error) {
+//     console.error("Error fetching business by ID:", error);
+//     res.status(500).json({ status: "error", error: error.message });
+//   }
+// });
 
-    const businessData = businesses.map((business) => ({
-      id: business._id,
-      businessName: business.businessName,
-      earnings: business.earnings,
-      employees: business.employees.map((employee) => ({
-        id: employee._id,
-        firstName: employee.firstName,
-        secondName: employee.secondName,
-        hoursWorked: employee.hoursWorked,
-        hourlyWage: employee.hourlyWage,
-        earnings: employee.earnings,
-      })),
-    }));
+// // GET businesses filtered by minimum earnings
+// router.get("/filter/by-earnings", async (req, res) => {
+//   try {
+//     const { minEarnings } = req.query;
 
-    res.json(businessData);
-  } catch (error) {
-    console.error("Error filtering businesses by earnings:", error);
-    res.status(500).json({ status: "error", error: error.message });
-  }
-});
+//     if (!minEarnings || isNaN(minEarnings)) {
+//       return res
+//         .status(400)
+//         .json({ status: "error", error: "Invalid or missing minEarnings" });
+//     }
+
+//     const businesses = await req.models.Business.find({
+//       earnings: { $gte: parseFloat(minEarnings) },
+//     }).populate("employees");
+
+//     console.log(
+//       `Fetched businesses with earnings >= ${minEarnings}:`,
+//       businesses.length
+//     );
+
+//     const businessData = businesses.map((business) => ({
+//       id: business._id,
+//       businessName: business.businessName,
+//       earnings: business.earnings,
+//       employees: business.employees.map((employee) => ({
+//         id: employee._id,
+//         firstName: employee.firstName,
+//         secondName: employee.secondName,
+//         hoursWorked: employee.hoursWorked,
+//         hourlyWage: employee.hourlyWage,
+//         earnings: employee.earnings,
+//       })),
+//     }));
+
+//     res.json(businessData);
+//   } catch (error) {
+//     console.error("Error filtering businesses by earnings:", error);
+//     res.status(500).json({ status: "error", error: error.message });
+//   }
+// });
 
 // POST a new business
 router.post("/", async (req, res) => {

@@ -1,25 +1,24 @@
 <html>
+  <head>
+    <title>Express</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="javascripts/index.js"></script>
+    <script src="javascripts/utils.js"></script>
+  </head>
 
-<head>
-  <title>Express</title>
-  <link rel="stylesheet" href="/stylesheets/style.css">
-  <script src="javascripts/index.js"></script>
-  <script src="javascripts/utils.js"></script>
-</head>
+  <body>
+    <h1>Express</h1>
+    <p>Welcome to Express</p>
+    <button onclick="DisplayBusinesses()">Get Business</button>
+    <h3>Login</h3>
+    <a href="/signin">Log in</a><br />
+    <a href="/signout">Log out</a>
 
-<body>
-  <h1>Express</h1>
-  <p>Welcome to Express</p>
-  <a href="/users/">Get your user info</a>
-
-  <h3>Login</h3>
-  <a href="/signin">Log in</a><br>
-  <a href="/signout">Log out</a>
-
-  <h3>Add Business</h3>
-  <p>Business name:</p><input id="business_name_input" type="text" />
-  <button onclick = "addBusiness()">Add Business</button> <span id="postStatus"></span>
-  <div id="business_results"></div>
-</body>
-
+    <h3>Add Business</h3>
+    <p>Business name:</p>
+    <input id="business_name_input" type="text" />
+    <button onclick="addBusiness()">Add Business</button>
+    <span id="postStatus"></span>
+    <div id="business_results"></div>
+  </body>
 </html>
