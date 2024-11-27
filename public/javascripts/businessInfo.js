@@ -4,24 +4,38 @@ async function init() {
 
 async function LoadEmployees() {
   try {
-    console.log("Loading all employees...");
     const employees = await fetchJSON(`/api/employees`);
     console.log("Employees loaded:", employees);
 
-    // Generate HTML for employees
-    let employeesHtml = employees
-      .map((employee) => {
-        return `
-          <div class="employee">
-            <p>Name: ${employee.firstName} ${employee.secondName}</p>
-            <p>Hours Worked: ${employee.hoursWorked}</p>
-            <p>Hourly Wage: $${employee.hourlyWage.toFixed(2)}</p>
-            <p>Earnings: $${employee.earnings.toFixed(2)}</p>
-          </div>
-        `;
-      })
-      .join("\n");
+    // Generate the HTML for the table
+    let employeesHtml = `
+      <table border="1" class="employee-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Hours Worked</th>
+            <th>Hourly Wage</th>
+            <th>Earnings</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${employees
+            .map((employee) => {
+              return `
+                <tr>
+                  <td>${employee.firstName} ${employee.secondName}</td>
+                  <td>${employee.hoursWorked}</td>
+                  <td>$${employee.hourlyWage.toFixed(2)}</td>
+                  <td>$${employee.earnings.toFixed(2)}</td>
+                </tr>
+              `;
+            })
+            .join("\n")}
+        </tbody>
+      </table>
+    `;
 
+    // Update the inner HTML of the employee_info_div
     document.getElementById("employee_info_div").innerHTML = employeesHtml;
   } catch (error) {
     console.error("Error loading employees:", error);
