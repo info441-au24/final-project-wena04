@@ -52,7 +52,7 @@ async function addEmployee() {
       hoursWorked: hoursWorked,
       businessID: businessID
     }
-})
+  })
   console.log(responseJson.status)
 
   if (responseJson.status == "success") {
