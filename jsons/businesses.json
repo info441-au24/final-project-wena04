@@ -1,0 +1,20 @@
+[
+  {
+    "businessName": "Tech Solutions",
+    "username": "tech_solutions",
+    "employees": "60d0fe4f5311236168a109ca",
+    "earnings": 500000
+  },
+  {
+    "businessName": "Creative Designs",
+    "username": "creative_designs",
+    "employees": "60d0fe4f5311236168a109cb",
+    "earnings": 300000
+  },
+  {
+    "businessName": "Health Plus",
+    "username": "health_plus",
+    "employees": "60d0fe4f5311236168a109cc",
+    "earnings": 750000
+  }
+]

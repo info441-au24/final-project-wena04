@@ -1,20 +1,12 @@
 import express from "express";
 var router = express.Router();
 
+// GET all employees
 router.get("/", async (req, res) => {
   try {
-    const { businessId, employeeId } = req.query;
-
-    let query = {};
-
-    // Filter employees by businessId or specific employeeId
-    if (businessId) {
-      query = { business: businessId };
-    } else if (employeeId) {
-      query = { _id: employeeId };
-    }
-
-    const employees = await req.models.Employee.find(query);
+    // Fetch all employees from the Employee collection
+    console.log("Fetching all employees...");
+    const employees = await req.models.Employee.find();
 
     if (!employees.length) {
       return res
@@ -22,7 +14,7 @@ router.get("/", async (req, res) => {
         .json({ status: "error", error: "No employees found" });
     }
 
-    // Calculate earnings dynamically for each employee
+    // Map and calculate earnings dynamically for each employee
     const employeeData = employees.map((employee) => ({
       id: employee._id,
       firstName: employee.firstName,
@@ -32,6 +24,7 @@ router.get("/", async (req, res) => {
       earnings: employee.hoursWorked * employee.hourlyWage,
     }));
 
+    // Return the employee data
     res.json({
       status: "success",
       employees: employeeData,

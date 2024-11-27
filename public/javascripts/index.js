@@ -1,6 +1,5 @@
 async function init() {
-  await loadIdentity();
-  loadPosts();
+  LoadBusinesses();
 }
 
 async function addBusiness() {
@@ -23,7 +22,7 @@ async function addBusiness() {
   }
 }
 
-async function DisplayBusinesses() {
+async function LoadBusinesses() {
   try {
     console.log("Fetching business names...");
     const businessesJson = await fetchJSON(`/api/business/`);
@@ -47,25 +46,29 @@ async function DisplayBusinesses() {
   }
 }
 
-async function DisplayEmployees() {
-  try {
-    console.log("Fetching employees...");
-    const employeesJson = await fetchJSON(`/api/employees/`);
-    let employeesHtml = employeesJson
-      .map((employee) => {
-        return `
-        <div class="employee">
-          <p>${employee.firstName} ${employee.secondName}</p>
-          <p>Hours Worked: ${employee.hoursWorked}</p>
-          <p>Hourly Wage: ${employee.hourlyWage}</p>
-          <p>Earnings: ${employee.earnings}</p>
-        </div>
-      `;
-      })
-      .join("\n");
+async function DisplayBusinessInfo() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const businessId = urlParams.get("businessID");
 
-    document.getElementById("employee_results").innerHTML = employeesHtml;
+  try {
+    console.log("Fetching business info...");
+    const business = await fetchJSON(`/api/business/${businessId}`);
+
+    document.getElementById("businessname-span").innerText =
+      business.businessName;
+
+    if (business.employee) {
+      document.getElementById("employee_info_div").innerHTML = `
+        <p>Employee: ${business.employee.firstName} ${business.employee.secondName}</p>
+        <p>Hours Worked: ${business.employee.hoursWorked}</p>
+        <p>Hourly Wage: ${business.employee.hourlyWage}</p>
+        <p>Earnings: ${business.employee.earnings}</p>
+      `;
+    } else {
+      document.getElementById("employee_info_div").innerText =
+        "No employees for this business.";
+    }
   } catch (error) {
-    console.error("Error fetching employees:", error);
+    console.error("Error fetching business info:", error);
   }
 }

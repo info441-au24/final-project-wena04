@@ -26,22 +26,23 @@ router.get("/", async (req, res) => {
 // GET all businesses
 router.get("/", async (req, res) => {
   try {
-    const businesses = await req.models.Business.find().populate("employees");
-
-    console.log("Fetched all businesses:", businesses.length); // Debug log
+    const businesses = await req.models.Business.find().populate("employee");
 
     const businessData = businesses.map((business) => ({
       id: business._id,
       businessName: business.businessName,
       earnings: business.earnings,
-      employees: business.employees.map((employee) => ({
-        id: employee._id,
-        firstName: employee.firstName,
-        secondName: employee.secondName,
-        hoursWorked: employee.hoursWorked,
-        hourlyWage: employee.hourlyWage,
-        earnings: employee.earnings,
-      })),
+      employee: business.employee
+        ? {
+            id: business.employee._id,
+            firstName: business.employee.firstName,
+            secondName: business.employee.secondName,
+            hoursWorked: business.employee.hoursWorked,
+            hourlyWage: business.employee.hourlyWage,
+            earnings:
+              business.employee.hoursWorked * business.employee.hourlyWage,
+          }
+        : null,
     }));
 
     res.json(businessData);

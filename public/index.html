@@ -3,24 +3,14 @@
     <title>Business Management Tool</title>
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <script src="javascripts/businessInfo.js"></script>
-    <script src="identity.js"></script>
     <script src="javascripts/index.js"></script>
     <script src="javascripts/utils.js"></script>
   </head>
 
   <body onload="init()">
-    <nav class="navbar navbar-light bg-light">
-      <div
-        id="errorInfo"
-        class="alert alert-danger fade show"
-        role="alert"
-        style="opacity: 0"
-      ></div>
-      <div id="identity_div">loading...</div>
-    </nav>
     <h1>Business Management Tool</h1>
     <p>Welcome to the Business Management Tool</p>
-    <button onclick="DisplayBusinesses()">Get Business</button>
+    <button onclick="LoadBusinesses()">Get Business</button>
     <h3>Login</h3>
     <a href="/signin">Log in</a><br />
     <a href="/signout">Log out</a>
