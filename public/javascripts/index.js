@@ -21,20 +21,18 @@ async function addBusiness() {
 async function DisplayBusinesses() {
   try {
     console.log("Fetching business names...");
-    const response = await fetch("/api/business/names");
-    const businessNames = await response.json();
+    const businessesJson = await fetchJSON(`/api/business/`);
+    let businessesHtml = businessesJson.map(business => {
+      return `
+        <div class="business">
+          <a href="/businessInfo.html?businessName=${encodeURIComponent(business.businessName)}">
+            <p>${business.businessName}</p>
+          <a>
+        </div>
+      `;
+    }).join("\n");
 
-    console.log("Business names received:", businessNames);
-
-    // Display the business names in the "business_results" div
-    const resultsDiv = document.getElementById("business_results");
-    resultsDiv.innerHTML = ""; // Clear any existing content
-
-    businessNames.forEach((name) => {
-      const listItem = document.createElement("p");
-      listItem.textContent = name;
-      resultsDiv.appendChild(listItem);
-    });
+    document.getElementById("business_results").innerHTML = businessesHtml;
   } catch (error) {
     console.error("Error fetching business names:", error);
   }

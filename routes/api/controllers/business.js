@@ -1,18 +1,20 @@
 import express from "express";
 var router = express.Router();
 
-// GET business names
-router.get("/names", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
-    // Fetch only the `businessName` field
-    const businesses = await req.models.Business.find({}, "businessName");
-    console.log("Fetched business names:", businesses); // Debug log
+    if (!req.session.isAuthenticated) {
+      res.status(401).json({
+          status: "error",
+          error: "not logged in"
+      })
+      return 
+    }
 
-    // Map only business names into an array
-    const businessNames = businesses.map((business) => business.businessName);
+    const businesses = await req.models.Business.find({username: req.session.account.username});
+    console.log("Fetched business:", businesses);
 
-    // Return the array of business names as JSON
-    res.json(businessNames);
+    res.json(businesses);
   } catch (error) {
     console.error("Error fetching business names:", error);
     res.status(500).json({ status: "error", error: error.message });
@@ -132,10 +134,18 @@ router.post("/", async (req, res) => {
     console.log("Entering /post");
     console.log("Received from req.body: ", req.body.businessName);
 
+    if (!req.session.isAuthenticated) {
+      res.status(401).json({
+          status: "error",
+          error: "not logged in"
+      })
+      return 
+    }
     const newBusinessName = req.body.businessName;
 
     const newBusiness = new req.models.Business({
       businessName: newBusinessName,
+      username: req.session.account.username
     });
 
     await newBusiness.save();

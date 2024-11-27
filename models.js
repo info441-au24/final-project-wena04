@@ -12,6 +12,7 @@ console.log("successfully connected to mongodb");
 
 const businessSchema = new mongoose.Schema({
   businessName: String,
+  username: String,
   // employees: { type: mongoose.Schema.Types.ObjectId, ref: "Employee" },
   // earnings: Number,
 });
