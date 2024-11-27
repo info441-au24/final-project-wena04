@@ -102,3 +102,36 @@ async function loadBusinessInfo() {
       "<p>Error loading business information.</p>";
   }
 }
+
+
+async function addEmployee() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const businessID = urlParams.get('businessID')
+  const firstName = document.getElementById("employee_first_name").value
+  const lastName = document.getElementById("employee_last_name").value
+  const hourlyWage = document.getElementById("hourly_wage").value
+  const hoursWorked = document.getElementById("hours_worked").value
+
+  console.log("Testing employee info:", firstName, lastName, hourlyWage, hoursWorked )
+  console.log("Testing business id:", businessID)
+
+  
+  let responseJson = await fetchJSON('api/employees', {
+    method: "POST",
+    body: {
+      firstName: firstName,
+      lastName: lastName,
+      hourlyWage: hourlyWage,
+      hoursWorked: hoursWorked,
+      businessID: businessID
+    }
+  })
+  console.log(responseJson.status)
+
+  if (responseJson.status == "success") {
+    document.getElementById("add_status").innerText = `Save Status: ${responseJson.status}`;
+  } else {
+    document.getElementById("add_status").innerText = `Save Status: ${responseJson.status} (Error: ${responseJson.error})`;
+
+  }
+}
