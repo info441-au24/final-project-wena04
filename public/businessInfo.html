@@ -1,0 +1,46 @@
+<html>
+  <head>
+    <title>Business Management Tool</title>
+    <link rel="stylesheet" href="/stylesheets/style.css" />
+    <script src="javascripts/index.js"></script>
+    <script src="javascripts/utils.js"></script>
+    <script src="javascripts/businessInfo.js"></script>
+  </head>
+
+  <body onload="init()">
+    <nav class="navbar navbar-light bg-light">
+      <div
+        id="errorInfo"
+        class="alert alert-danger fade show"
+        role="alert"
+        style="opacity: 0"
+      ></div>
+      <div><a href="/">Return to Homepage</a></div>
+    </nav>
+    <h1>Business Management Tool</h1>
+
+    <h2>Info for user: <span id="username-span"></span></h2>
+    <div id="user_info_div">loading current user info...</div>
+
+    <h2>Info for Business: <span id="businessname-span"></span></h2>
+    <div id="business_info_div">loading business info...</div>
+
+    <h2>All Employees</h2>
+    <div id="employee_info_div">loading employee info table...</div>
+
+    <div id="posts_box"></div>
+    <h2>Add Employee</h2>
+    <div id="add_employee">
+      First Name: <input id="employee_first_name" type="text" />
+      <br><br>
+      Last Name: <input id="employee_last_name" type="text" />
+      <br><br>
+      Hourly Wage: <input id="hourly_wage" type="text" />
+      <br><br>
+      Hours Worked: <input id="hours_worked" type="text" />
+      <br><br>
+      <button onclick="addEmployee()">Add Employee</button>
+      <span id="add_status"></span>
+    </div>
+  </body>
+</html>
