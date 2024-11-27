@@ -10,17 +10,19 @@ async function addBusiness() {
 
   // fetchJSON not defined error
   // copied utils.js file to implement fetchJSON()
-  try {
     let responseJson = await fetchJSON(`api/business`, {
       method: "POST",
       body: { businessName: businessName },
     });
     console.log("response received. successfully saved business");
-  } catch (error) {
-    document.getElementById("postStatus").innerText = "Error";
-    throw error;
-  }
-  loadBusinesses()
+
+    if (responseJson.status == "success") {
+      document.getElementById("postStatus").innerText = `Status: ${responseJson.status}`;
+    } else {
+      document.getElementById("postStatus").innerText = `Status: ${responseJson.status} (${responseJson.error})`;
+
+    }
+    loadBusinesses()
 }
 
 async function loadBusinesses() {
