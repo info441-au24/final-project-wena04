@@ -23,10 +23,10 @@ console.log("business models created");
 
 const employeeSchema = new mongoose.Schema({
   firstName: String,
-  secondName: String,
-  hoursWorked: Number,
+  lastName: String,
   hourlyWage: Number,
-  earnings: Number,
+  hoursWorked: Number,
+  businessID: {type: mongoose.Schema.Types.ObjectId, ref: "Business"}
 });
 
 models.Employee = mongoose.model("Employee", employeeSchema);
