@@ -35,4 +35,26 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.post('/', async (req, res) => {
+  try {
+    const employeePost = new req.models.Employee({
+      firstName: req.body.firstName, 
+      lastName: req.body.lastName,
+      hourlyWage: Number(req.body.hourlyWage),
+      hoursWorked: Number(req.body.hoursWorked)
+    })
+    await employeePost.save()
+    res.json({
+      status: "success"
+    })
+
+  } catch (error) {
+    console.log("Error saving employee: ", error)
+    res.status(500).json({
+      status: "error", 
+      error: error.message
+    })
+  }
+})
+
 export default router;

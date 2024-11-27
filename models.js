@@ -26,7 +26,7 @@ const employeeSchema = new mongoose.Schema({
   secondName: String,
   hoursWorked: Number,
   hourlyWage: Number,
-  earnings: Number,
+  business: {type: mongoose.Schema.Types.ObjectId, ref: "Business"}
 });
 
 models.Employee = mongoose.model("Employee", employeeSchema);
