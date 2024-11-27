@@ -5,8 +5,8 @@ async function init() {
 async function LoadEmployees() {
   try {
     console.log("Loading all employees...");
-    const employees = await fetchJSON(`/api/employees`); // Fetch employee data
-    console.log("Employees loaded:", employees); // Log the response
+    const employees = await fetchJSON(`/api/employees`);
+    console.log("Employees loaded:", employees);
 
     // Generate HTML for employees
     let employeesHtml = employees
@@ -22,7 +22,6 @@ async function LoadEmployees() {
       })
       .join("\n");
 
-    // Update the employee_info_div with the generated HTML
     document.getElementById("employee_info_div").innerHTML = employeesHtml;
   } catch (error) {
     console.error("Error loading employees:", error);

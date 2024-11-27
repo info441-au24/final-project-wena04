@@ -45,30 +45,3 @@ async function LoadBusinesses() {
     console.error("Error fetching business names:", error);
   }
 }
-
-async function DisplayBusinessInfo() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const businessId = urlParams.get("businessID");
-
-  try {
-    console.log("Fetching business info...");
-    const business = await fetchJSON(`/api/business/${businessId}`);
-
-    document.getElementById("businessname-span").innerText =
-      business.businessName;
-
-    if (business.employee) {
-      document.getElementById("employee_info_div").innerHTML = `
-        <p>Employee: ${business.employee.firstName} ${business.employee.secondName}</p>
-        <p>Hours Worked: ${business.employee.hoursWorked}</p>
-        <p>Hourly Wage: ${business.employee.hourlyWage}</p>
-        <p>Earnings: ${business.employee.earnings}</p>
-      `;
-    } else {
-      document.getElementById("employee_info_div").innerText =
-        "No employees for this business.";
-    }
-  } catch (error) {
-    console.error("Error fetching business info:", error);
-  }
-}
