@@ -5,14 +5,14 @@ let models = {};
 console.log("connecting to mongodb");
 
 await mongoose.connect(
-  "mongodb+srv://root:info441@cluster0.vnmb0.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  "mongodb+srv://mikelabz:1234@cluster0.kxlma.mongodb.net/EMT?retryWrites=true&w=majority&appName=Cluster0"
 );
 
 console.log("successfully connected to mongodb");
 
 const businessSchema = new mongoose.Schema({
   businessName: String,
-  username: String,
+  username: String
   // employees: { type: mongoose.Schema.Types.ObjectId, ref: "Employee" },
   // earnings: Number,
 });

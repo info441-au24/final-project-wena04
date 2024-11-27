@@ -25,7 +25,7 @@ async function DisplayBusinesses() {
     let businessesHtml = businessesJson.map(business => {
       return `
         <div class="business">
-          <a href="/businessInfo.html?businessName=${encodeURIComponent(business.businessName)}">
+          <a href="/businessInfo.html?businessID=${encodeURIComponent(business._id)}">
             <p>${business.businessName}</p>
           <a>
         </div>
