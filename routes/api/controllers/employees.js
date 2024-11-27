@@ -8,12 +8,6 @@ router.get("/", async (req, res) => {
     console.log("Fetching all employees...");
     const employees = await req.models.Employee.find();
 
-    if (!employees.length) {
-      return res
-        .status(404)
-        .json({ status: "error", error: "No employees found" });
-    }
-
     // Map and calculate earnings dynamically for each employee
     const employeeData = employees.map((employee) => ({
       id: employee._id,
