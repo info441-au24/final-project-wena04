@@ -61,12 +61,4 @@ async function addEmployee() {
     document.getElementById("add_status").innerText = `Save Status: ${responseJson.status} (Error: ${responseJson.error})`;
 
   }
-
-  
-
-
-
-
-
-
 }
