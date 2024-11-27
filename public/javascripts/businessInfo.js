@@ -49,7 +49,8 @@ async function addEmployee() {
       firstName: firstName,
       lastName: lastName,
       hourlyWage: hourlyWage,
-      // hoursWorked: hoursWorked
+      hoursWorked: hoursWorked,
+      businessID: businessID
     }
 })
   console.log(responseJson.status)
@@ -57,7 +58,7 @@ async function addEmployee() {
   if (responseJson.status == "success") {
     document.getElementById("add_status").innerText = `Save Status: ${responseJson.status}`;
   } else {
-      document.getElementById("add_status").innerText = `Save Status: ${responseJson.status} (Error: ${responseJson.error})`;
+    document.getElementById("add_status").innerText = `Save Status: ${responseJson.status} (Error: ${responseJson.error})`;
 
   }
 

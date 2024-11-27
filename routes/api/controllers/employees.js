@@ -41,7 +41,8 @@ router.post('/', async (req, res) => {
       firstName: req.body.firstName, 
       lastName: req.body.lastName,
       hourlyWage: Number(req.body.hourlyWage),
-      hoursWorked: Number(req.body.hoursWorked)
+      hoursWorked: Number(req.body.hoursWorked),
+      businessID: req.models.businessID
     })
     await employeePost.save()
     res.json({
