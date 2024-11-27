@@ -1,9 +1,9 @@
 async function init() {
-  LoadEmployees();
-  LoadBusinessInfo();
+  loadEmployees();
+  loadBusinessInfo();
 }
 
-async function LoadEmployees() {
+async function loadEmployees() {
   try {
     const employees = await fetchJSON(`/api/employees`);
     console.log("Employees loaded:", employees);
@@ -45,7 +45,7 @@ async function LoadEmployees() {
   }
 }
 
-async function LoadBusinessInfo() {
+async function loadBusinessInfo() {
   try {
     const businessInfo = await fetchJSON(`/api/business`);
     console.log("Business information loaded:", businessInfo);
