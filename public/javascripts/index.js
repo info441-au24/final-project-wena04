@@ -1,5 +1,5 @@
 async function init() {
-  LoadBusinesses();
+  loadBusinesses();
 }
 
 async function addBusiness() {
@@ -20,9 +20,10 @@ async function addBusiness() {
     document.getElementById("postStatus").innerText = "Error";
     throw error;
   }
+  loadBusinesses()
 }
 
-async function LoadBusinesses() {
+async function loadBusinesses() {
   try {
     console.log("Fetching business names...");
     const businessesJson = await fetchJSON(`/api/business/`);
