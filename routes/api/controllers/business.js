@@ -1,7 +1,7 @@
 import express from "express";
 var router = express.Router();
 
-// GET business names
+// GET all business information
 router.get("/", async (req, res) => {
   try {
     if (!req.session.isAuthenticated) {
