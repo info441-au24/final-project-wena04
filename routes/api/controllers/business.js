@@ -1,18 +1,20 @@
 import express from "express";
 var router = express.Router();
 
+// GET business names
 router.get("/", async (req, res) => {
   try {
     if (!req.session.isAuthenticated) {
       res.status(401).json({
-          status: "error",
-          error: "not logged in"
-      })
-      return 
+        status: "error",
+        error: "not logged in",
+      });
+      return;
     }
 
-    const businesses = await req.models.Business.find({username: req.session.account.username});
-    // const businesses = await req.models.Business.find();
+    const username = req.session.account.username;
+    const businesses = await req.models.Business.find({ username: username });
+
     console.log("Fetched business:", businesses);
     res.json(businesses);
   } catch (error) {
@@ -21,33 +23,33 @@ router.get("/", async (req, res) => {
   }
 });
 
-// // GET all businesses
-// router.get("/", async (req, res) => {
-//   try {
-//     const businesses = await req.models.Business.find().populate("employees");
+// GET all businesses
+router.get("/", async (req, res) => {
+  try {
+    const businesses = await req.models.Business.find().populate("employees");
 
-//     console.log("Fetched all businesses:", businesses.length); // Debug log
+    console.log("Fetched all businesses:", businesses.length); // Debug log
 
-//     const businessData = businesses.map((business) => ({
-//       id: business._id,
-//       businessName: business.businessName,
-//       earnings: business.earnings,
-//       employees: business.employees.map((employee) => ({
-//         id: employee._id,
-//         firstName: employee.firstName,
-//         secondName: employee.secondName,
-//         hoursWorked: employee.hoursWorked,
-//         hourlyWage: employee.hourlyWage,
-//         earnings: employee.earnings,
-//       })),
-//     }));
+    const businessData = businesses.map((business) => ({
+      id: business._id,
+      businessName: business.businessName,
+      earnings: business.earnings,
+      employees: business.employees.map((employee) => ({
+        id: employee._id,
+        firstName: employee.firstName,
+        secondName: employee.secondName,
+        hoursWorked: employee.hoursWorked,
+        hourlyWage: employee.hourlyWage,
+        earnings: employee.earnings,
+      })),
+    }));
 
-//     res.json(businessData);
-//   } catch (error) {
-//     console.error("Error fetching businesses:", error);
-//     res.status(500).json({ status: "error", error: error.message });
-//   }
-// });
+    res.json(businessData);
+  } catch (error) {
+    console.error("Error fetching businesses:", error);
+    res.status(500).json({ status: "error", error: error.message });
+  }
+});
 
 // // GET a specific business by ID
 // router.get("/:businessId", async (req, res) => {
@@ -136,16 +138,16 @@ router.post("/", async (req, res) => {
 
     if (!req.session.isAuthenticated) {
       res.status(401).json({
-          status: "error",
-          error: "not logged in"
-      })
-      return 
+        status: "error",
+        error: "not logged in",
+      });
+      return;
     }
     const newBusinessName = req.body.businessName;
 
     const newBusiness = new req.models.Business({
       businessName: newBusinessName,
-      username: req.session.account.username
+      username: req.session.account.username,
     });
 
     await newBusiness.save();
