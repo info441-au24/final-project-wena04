@@ -34,8 +34,7 @@ models.Employee = mongoose.model("Employee", employeeSchema);
 console.log("employee models created");
 
 const userSchema = new mongoose.Schema({
-  username: String,
-  favorite_bands: [String],
+  username: String
 });
 
 models.User = mongoose.model("User", userSchema);

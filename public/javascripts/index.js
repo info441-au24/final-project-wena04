@@ -1,5 +1,12 @@
 async function init() {
-  loadBusinesses();
+  try {
+    let identityInfo = await fetchJSON(`api/users`)
+    if (identityInfo.status == "loggedin") {
+      loadBusinesses();
+    }
+  } catch(error) {
+    console.log("User is not logged in: ", error)
+  }
 }
 
 async function addBusiness() {
