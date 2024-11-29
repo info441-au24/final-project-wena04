@@ -5,18 +5,16 @@ async function init() {
 
 async function loadEmployees() {
   try {
-    // Extract the businessID from the URL query parameters
     const urlParams = new URLSearchParams(window.location.search);
     const businessID = urlParams.get("businessID");
 
-    console.log("Extracted businessID:", businessID);
+    // console.log("Extracted businessID:", businessID);
 
     const employees = await fetchJSON(
       `/api/employees?businessID=${businessID}`
     );
-    console.log("Employees loaded:", employees);
+    // console.log("Employees loaded:", employees);
 
-    // Generate the HTML for the table
     let employeesHtml = `
       <table border="1" class="employee-table">
         <thead>
@@ -32,10 +30,10 @@ async function loadEmployees() {
             .map((employee) => {
               return `
                 <tr>
-                  <td>${employee.firstName} ${employee.secondName}</td>
+                  <td>${employee.firstName} ${employee.lastName}</td>
                   <td>${employee.hoursWorked}</td>
-                  <td>$${employee.hourlyWage.toFixed(2)}</td>
-                  <td>$${employee.earnings.toFixed(2)}</td>
+                  <td>$${employee.hourlyWage}</td>
+                  <td>$${employee.hoursWorked * employee.hourlyWage}</td>
                 </tr>
               `;
             })
@@ -44,7 +42,6 @@ async function loadEmployees() {
       </table>
     `;
 
-    // Update the inner HTML of the employee_info_div
     document.getElementById("employee_info_div").innerHTML = employeesHtml;
   } catch (error) {
     console.error("Error loading employees:", error);
@@ -92,7 +89,8 @@ async function addEmployee() {
     firstName,
     lastName,
     hourlyWage,
-    hoursWorked
+    hoursWorked,
+    businessID
   );
   console.log("Testing business id:", businessID);
 

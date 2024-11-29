@@ -5,17 +5,12 @@ var router = express.Router();
 router.get("/", async (req, res) => {
   try {
     const business = req.query.businessID;
-    console.log("Fetching employees for businessID: ", business);
-    const employees = await req.models.Employee.find({ employees: business });
-    console.log("Fetced employees:", employees);
-    const allEmployees = await req.models.Employee.find();
-    console.log("all employees: ", allEmployees);
-
+    const employees = await req.models.Employee.find({
+      businessID: business,
+    });
     res.json(employees);
   } catch (error) {
-    // console.log("username is: ", req.session.account.username);
-    console.log("businessID is: ", req.query.businessID);
-    // console.error("Error fetching employees:", error);
+    console.error("Error fetching employees:", error);
     res.status(500).json({ status: "error", error: error.message });
   }
 });
@@ -28,7 +23,7 @@ router.post("/", async (req, res) => {
       lastName: req.body.lastName,
       hourlyWage: Number(req.body.hourlyWage),
       hoursWorked: Number(req.body.hoursWorked),
-      businessID: req.models.businessID,
+      businessID: req.body.businessID,
     });
     await employeePost.save();
     res.json({
