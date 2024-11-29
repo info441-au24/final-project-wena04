@@ -1,6 +1,32 @@
 async function init() {
-  loadEmployees();
+  // loadUser();
   loadBusinessInfo();
+  loadEmployees();
+}
+
+async function loadBusinessInfo() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const businessID = urlParams.get("businessID");
+
+    const business = await fetchJSON(
+      `/api/businessInfo?businessID=${businessID}`
+    );
+
+    const businessesHtml = `
+        <div class="business-info">
+        <p>Business: ${business.businessName}</p>
+        <p>Owner: ${business.username}</p>
+        <p>Total Earnings: $${business.earnings || 0}</p>
+        </div>
+      `;
+
+    document.getElementById("business_info_div").innerHTML = businessesHtml;
+  } catch (error) {
+    console.error("Error loading business information:", error);
+    document.getElementById("business_info_div").innerHTML =
+      "<p>Error loading business information.</p>";
+  }
 }
 
 async function loadEmployees() {
@@ -47,31 +73,6 @@ async function loadEmployees() {
     console.error("Error loading employees:", error);
     document.getElementById("employee_info_div").innerHTML =
       "<p>Error loading employees.</p>";
-  }
-}
-
-async function loadBusinessInfo() {
-  try {
-    const urlParams = new URLSearchParams(window.location.search);
-    const businessID = urlParams.get("businessID");
-
-    const business = await fetchJSON(
-      `/api/businessInfo?businessID=${businessID}`
-    );
-
-    const businessesHtml = `
-        <div class="business-info">
-        <p>Business: ${business.businessName}</p>
-        <p>Owner: ${business.username}</p>
-        <p>Total Earnings: $${business.earnings || 0}</p>
-        </div>
-      `;
-
-    document.getElementById("business_info_div").innerHTML = businessesHtml;
-  } catch (error) {
-    console.error("Error loading business information:", error);
-    document.getElementById("business_info_div").innerHTML =
-      "<p>Error loading business information.</p>";
   }
 }
 
