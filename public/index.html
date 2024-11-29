@@ -11,20 +11,24 @@
     <script src="javascripts/businessInfo.js"></script>
     <script src="javascripts/index.js"></script>
     <script src="javascripts/utils.js"></script>
+    <script src="javascripts/myIdentity.js"></script>
   </head>
 
   <body onload="init()">
-    <h1>Business Management Tool</h1>
-    <p>Welcome to the Business Management Tool</p>
-    <h3>Login</h3>
-    <a href="/signin">Log in</a><br />
-    <a href="/signout">Log out</a><br />
-    <h3>Add Business</h3>
-    <p>Business name:</p>
-    <input id="business_name_input" type="text" />
-    <button onclick="addBusiness()">Add Business</button>
-    <span id="postStatus"></span>
-    <h4>Businesses:</h4>
-    <div id="business_results"></div>
+    <nav class="navbar bg-light h-auto">
+      <div id="identity_div" class="ms-auto p-2">loading...</div>
+    </nav>
+
+    <div class="p-5">
+      <h1>Business Management Tool</h1>
+      <p>Welcome to the Business Management Tool</p>
+      <h3>Add Business</h3>
+      <p>Business name:</p>
+      <input id="business_name_input" type="text" />
+      <button onclick="addBusiness()">Add Business</button>
+      <span id="postStatus"></span>
+      <h4>Businesses:</h4>
+      <div id="business_results"></div>
+    </div>
   </body>
 </html>

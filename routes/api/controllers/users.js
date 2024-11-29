@@ -1,7 +1,7 @@
 import express from "express";
 var router = express.Router();
 
-router.get("/", function (req, res, next) {
+router.get("/myIdentity", function (req, res, next) {
   if(req.session.isAuthenticated) {
     res.json({
         status: "loggedin", 

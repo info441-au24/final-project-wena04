@@ -1,6 +1,7 @@
 async function init() {
+  loadIdentity()
   try {
-    let identityInfo = await fetchJSON(`api/users`)
+    let identityInfo = await fetchJSON(`api/users/myIdentity`)
     if (identityInfo.status == "loggedin") {
       loadBusinesses();
     }
