@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
   }
 });
 
-//FYI We are not including earnings as property of an employee. This will be handled in another api call
+// POST a new employee
 router.post("/", async (req, res) => {
   try {
     const employeePost = new req.models.Employee({

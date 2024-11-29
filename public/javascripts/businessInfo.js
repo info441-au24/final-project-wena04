@@ -15,7 +15,7 @@ async function loadEmployees() {
     );
     // console.log("Employees loaded:", employees);
 
-    let employeesHtml = `
+    const employeesHtml = `
       <table border="1" class="employee-table">
         <thead>
           <tr>
@@ -52,21 +52,20 @@ async function loadEmployees() {
 
 async function loadBusinessInfo() {
   try {
-    console.log("Fetching business names...");
-    const businessesJson = await fetchJSON(`/api/business/`);
-    let businessesHtml = businessesJson
-      .map((business) => {
-        return `
-        <div class="business">
-          <a href="/businessInfo.html?businessID=${encodeURIComponent(
-            business._id
-          )}">
-            <p>${business.businessName}</p>
-          <a>
+    const urlParams = new URLSearchParams(window.location.search);
+    const businessID = urlParams.get("businessID");
+
+    const business = await fetchJSON(
+      `/api/businessInfo?businessID=${businessID}`
+    );
+
+    const businessesHtml = `
+        <div class="business-info">
+        <p>Business: ${business.businessName}</p>
+        <p>Owner: ${business.username}</p>
+        <p>Total Earnings: $${business.earnings || 0}</p>
         </div>
       `;
-      })
-      .join("\n");
 
     document.getElementById("business_info_div").innerHTML = businessesHtml;
   } catch (error) {

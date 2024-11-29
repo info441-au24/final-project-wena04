@@ -23,6 +23,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// POST a new business
 router.post("/", async (req, res) => {
   try {
     console.log("Entering /post");
