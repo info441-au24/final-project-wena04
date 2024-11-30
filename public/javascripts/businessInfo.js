@@ -110,6 +110,7 @@ async function addEmployee() {
     document.getElementById(
       "add_status"
     ).innerText = `Save Status: ${responseJson.status}`;
+    loadEmployees();
   } else {
     document.getElementById(
       "add_status"
@@ -123,8 +124,8 @@ async function loadUserinfo() {
 
       const identityInfo = await fetchJSON(`api/users/myIdentity`)
       if (identityInfo.status == "loggedin") {
-          username = identityInfo.userInfo.username;
-          name = identityInfo.userInfo.name;
+          const username = identityInfo.userInfo.username;
+          const name = identityInfo.userInfo.name;
           user_info_div.innerHTML = `
           <p>Name: ${escapeHTML(name)}</p>
           <p>Username: ${escapeHTML(username)}</p>
