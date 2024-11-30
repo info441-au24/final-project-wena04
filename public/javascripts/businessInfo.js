@@ -18,6 +18,8 @@ async function loadBusinessInfo() {
         <p>Business: ${business.businessName}</p>
         <p>Owner: ${business.username}</p>
         <p>Total Earnings: $${business.earnings || 0}</p>
+        Add To Total Earnings: <input id="business_earnings_input" type="text" />
+        <button onclick="addBusinessEarnings()">Add Earnings</button>
         </div>
       `;
 
