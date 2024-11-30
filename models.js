@@ -21,8 +21,6 @@ console.log("user models created");
 const businessSchema = new mongoose.Schema({
   businessName: String,
   username: String,
-  // don't think we need this employees field but can double check
-  // employees: { type: mongoose.Schema.Types.ObjectId, ref: "Employee" },
 
   // also don't think we need this earning field as we can calculate it
   // by doing some math on like all the employees and their hours and such
