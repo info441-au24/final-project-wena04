@@ -45,8 +45,9 @@ router.post('/addHours', async(req, res) => {
     // console.log("Employee ID: ", req.body.employeeID)
     // console.log("Hours Being Added: ", req.body.hours)
     const employee = await req.models.Employee.findById({_id: req.body.employeeID})
-    console.log("Employee from db: ", employee)
+    // console.log("Employee from db: ", employee)
     employee.hoursWorked += Number(req.body.hours)
+
     await employee.save()
     res.json({
       status: "Success"
