@@ -1,5 +1,5 @@
 async function init() {
-  // loadUser();
+  loadUserinfo();
   loadBusinessInfo();
   loadEmployees();
 }
@@ -114,5 +114,25 @@ async function addEmployee() {
     document.getElementById(
       "add_status"
     ).innerText = `Save Status: ${responseJson.status} (Error: ${responseJson.error})`;
+  }
+}
+
+async function loadUserinfo() {
+  try {
+      let user_info_div = document.getElementById("user_info_div");
+
+      const identityInfo = await fetchJSON(`api/users/myIdentity`)
+      if (identityInfo.status == "loggedin") {
+          username = identityInfo.userInfo.username;
+          name = identityInfo.userInfo.name;
+          user_info_div.innerHTML = `
+          <p>Name: ${escapeHTML(name)}</p>
+          <p>Username: ${escapeHTML(username)}</p>
+          `;
+      } else {
+          user_info_div.innerHTML = `<p>Please log in</p>`;
+      }
+  } catch(error) {
+      console.log("Error occured when loading user info: " ,error);
   }
 }
