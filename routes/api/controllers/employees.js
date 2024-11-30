@@ -38,4 +38,26 @@ router.post("/", async (req, res) => {
   }
 });
 
+//POST add hours to employee
+router.post('/addHours', async(req, res) => {
+  try {
+    console.log("Entering addHours post api")
+    console.log("Employee ID: ", req.body.employeeID)
+    console.log("Hours Being Added: ", req.body.hours)
+    const employee = await req.models.Employee.findById({_id: req.body.employeeID})
+    console.log("Employee from db: ", employee)
+    employee.hoursWorked += Number(req.body.hours)
+    await employee.save()
+    res.json({
+      status: "Success"
+    })
+  } catch (error) {
+    console.log("Error updating employee's hours: ", error);
+    res.status(500).json({
+      status: "error",
+      error: error.message,
+    });
+  }
+})
+
 export default router;

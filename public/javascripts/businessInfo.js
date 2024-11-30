@@ -56,7 +56,7 @@ async function loadEmployees() {
             .map((employee) => {
               return `
                 <tr>
-                  <td>${employee.firstName} ${employee.lastName}</td>
+                  <td><button onClick="loadEmployee('${employee._id}', '${employee.firstName}', '${employee.lastName}')">${employee.firstName} ${employee.lastName}</button></td>
                   <td>${employee.hoursWorked}</td>
                   <td>$${employee.hourlyWage}</td>
                   <td>$${employee.hoursWorked * employee.hourlyWage}</td>
@@ -136,4 +136,39 @@ async function loadUserinfo() {
   } catch(error) {
       console.log("Error occured when loading user info: " ,error);
   }
+}
+
+async function loadEmployee(employeeID, firstName, lastName) {
+  console.log("Entering loadEmployee function")
+  // console.log(employeeID)
+  // console.log(firstName)
+  // console.log(lastName)
+
+  document.getElementById("employee_edit").innerHTML = `
+  <h2>Adjust ${firstName} ${lastName}'s Information</h4>
+  <button onClick="addHours('${employeeID}')">Add Hours</button><input id="add_hours" type="text"/><span id="hours_update_status"></span>
+  
+  `
+
+}
+
+async function addHours(employeeID) {
+  const hours = document.getElementById("add_hours").value
+  // console.log(hours)
+  // console.log(employeeID)
+
+  let responseJson = await fetchJSON("api/employees/addHours", {
+    method: "POST",
+    body: {
+      hours: hours,
+      employeeID: employeeID
+    },
+  });
+
+  if (responseJson.status == "success") {
+    document.getElementById("hours_update_status").innerText = `Update Hours: ${responseJson.status}`
+  } else {
+    document.getElementById("hours_update_status").innerText = `Update Hours: ${responseJson.status}`
+  }
+  loadEmployees()
 }
