@@ -15,5 +15,9 @@ async function loadIdentity() {
         }
     } catch (error) {
         console.log("Error occured when loading identity: ", error)
+        return res.status(500).json({
+            status: "error",
+            error: error.toString()
+        })
     }
 }
