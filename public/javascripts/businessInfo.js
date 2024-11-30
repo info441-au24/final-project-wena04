@@ -138,6 +138,7 @@ async function loadUserinfo() {
   }
 }
 
+//onClick function to create div and input field for specific employee using the passed employee name and ID
 async function loadEmployee(employeeID, firstName, lastName) {
   console.log("Entering loadEmployee function")
   // console.log(employeeID)
@@ -152,6 +153,7 @@ async function loadEmployee(employeeID, firstName, lastName) {
 
 }
 
+//New api call to employees/addHours to incrememnt and post added hours
 async function addHours(employeeID) {
   const hours = document.getElementById("add_hours").value
   // console.log(hours)
