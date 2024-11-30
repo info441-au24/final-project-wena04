@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
     const username = req.session.account.username;
     const businesses = await req.models.Business.find({ username: username });
 
-    console.log("Fetched business:", businesses);
+    // console.log("Fetched business:", businesses);
     res.json(businesses);
   } catch (error) {
     console.error("Error fetching business names:", error);
@@ -23,6 +23,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// POST a new business
 router.post("/", async (req, res) => {
   try {
     console.log("Entering /post");

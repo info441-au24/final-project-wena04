@@ -1,12 +1,12 @@
 body {
-  padding: 50px;
+  padding-top: 60px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 nav.navbar {
-  position: fixed; /* Set the navbar to fixed position */
-  top: 0; /* Position the navbar at the top of the page */
-  width: 80%;
+  position: fixed; 
+  top: 0; 
+  width: 100%;
 }
 
 a {

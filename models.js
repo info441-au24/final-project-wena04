@@ -10,10 +10,20 @@ await mongoose.connect(
 
 console.log("successfully connected to mongodb");
 
+const userSchema = new mongoose.Schema({
+  username: String,
+});
+
+models.User = mongoose.model("User", userSchema);
+
+console.log("user models created");
+
 const businessSchema = new mongoose.Schema({
   businessName: String,
   username: String,
-  employees: { type: mongoose.Schema.Types.ObjectId, ref: "Employee" },
+
+  // also don't think we need this earning field as we can calculate it
+  // by doing some math on like all the employees and their hours and such
   earnings: Number,
 });
 
@@ -26,20 +36,13 @@ const employeeSchema = new mongoose.Schema({
   lastName: String,
   hourlyWage: Number,
   hoursWorked: Number,
-  businessID: {type: mongoose.Schema.Types.ObjectId, ref: "Business"}
+  businessID: { type: mongoose.Schema.Types.ObjectId, ref: "Business" },
+  // for the p2 functions later if we want to do them
+  // date: { type: Date, default: Date.now },
 });
 
 models.Employee = mongoose.model("Employee", employeeSchema);
 
 console.log("employee models created");
-
-const userSchema = new mongoose.Schema({
-  username: String,
-  favorite_bands: [String],
-});
-
-models.User = mongoose.model("User", userSchema);
-
-console.log("user models created");
 
 export default models;

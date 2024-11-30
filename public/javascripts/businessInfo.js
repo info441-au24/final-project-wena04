@@ -1,15 +1,47 @@
 async function init() {
-  loadEmployees();
+  loadUserinfo();
   loadBusinessInfo();
+  loadEmployees();
+}
+
+async function loadBusinessInfo() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const businessID = urlParams.get("businessID");
+
+    const business = await fetchJSON(
+      `/api/businessInfo?businessID=${businessID}`
+    );
+
+    const businessesHtml = `
+        <div class="business-info">
+        <p>Business: ${business.businessName}</p>
+        <p>Owner: ${business.username}</p>
+        <p>Total Earnings: $${business.earnings || 0}</p>
+        </div>
+      `;
+
+    document.getElementById("business_info_div").innerHTML = businessesHtml;
+  } catch (error) {
+    console.error("Error loading business information:", error);
+    document.getElementById("business_info_div").innerHTML =
+      "<p>Error loading business information.</p>";
+  }
 }
 
 async function loadEmployees() {
   try {
-    const employees = await fetchJSON(`/api/employees`);
-    console.log("Employees loaded:", employees);
+    const urlParams = new URLSearchParams(window.location.search);
+    const businessID = urlParams.get("businessID");
 
-    // Generate the HTML for the table
-    let employeesHtml = `
+    // console.log("Extracted businessID:", businessID);
+
+    const employees = await fetchJSON(
+      `/api/employees?businessID=${businessID}`
+    );
+    // console.log("Employees loaded:", employees);
+
+    const employeesHtml = `
       <table border="1" class="employee-table">
         <thead>
           <tr>
@@ -24,10 +56,10 @@ async function loadEmployees() {
             .map((employee) => {
               return `
                 <tr>
-                  <td>${employee.firstName} ${employee.secondName}</td>
+                  <td>${employee.firstName} ${employee.lastName}</td>
                   <td>${employee.hoursWorked}</td>
-                  <td>$${employee.hourlyWage.toFixed(2)}</td>
-                  <td>$${employee.earnings.toFixed(2)}</td>
+                  <td>$${employee.hourlyWage}</td>
+                  <td>$${employee.hoursWorked * employee.hourlyWage}</td>
                 </tr>
               `;
             })
@@ -36,7 +68,6 @@ async function loadEmployees() {
       </table>
     `;
 
-    // Update the inner HTML of the employee_info_div
     document.getElementById("employee_info_div").innerHTML = employeesHtml;
   } catch (error) {
     console.error("Error loading employees:", error);
@@ -45,93 +76,64 @@ async function loadEmployees() {
   }
 }
 
-async function loadBusinessInfo() {
-  try {
-    const businessInfo = await fetchJSON(`/api/business`);
-    console.log("Business information loaded:", businessInfo);
-
-    const businessHtml = `
-      <div class="business-info">
-        <h2>Business Name: ${businessInfo.businessName}</h2>
-        <p><strong>Owner Username:</strong> ${businessInfo.username}</p>
-        <p><strong>Total Earnings:</strong> $${businessInfo.earnings.toFixed(
-          2
-        )}</p>
-      </div>
-      <div class="business-employees">
-        <h3>Employees:</h3>
-        ${
-          businessInfo.employees && businessInfo.employees.length > 0
-            ? `
-              <table>
-                <thead>
-                  <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Hours Worked</th>
-                    <th>Hourly Wage</th>
-                    <th>Earnings</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${businessInfo.employees
-                    .map(
-                      (employee) => `
-                      <tr>
-                        <td>${employee.firstName}</td>
-                        <td>${employee.lastName}</td>
-                        <td>${employee.hoursWorked}</td>
-                        <td>$${employee.hourlyWage.toFixed(2)}</td>
-                        <td>$${employee.earnings.toFixed(2)}</td>
-                      </tr>
-                    `
-                    )
-                    .join("\n")}
-                </tbody>
-              </table>
-            `
-            : "<p>No employees found.</p>"
-        }
-      </div>
-    `;
-
-    document.getElementById("business_info_div").innerHTML = businessHtml;
-  } catch (error) {
-    console.error("Error loading business information:", error);
-    document.getElementById("business_info_div").innerHTML =
-      "<p>Error loading business information.</p>";
-  }
-}
-
-
 async function addEmployee() {
   const urlParams = new URLSearchParams(window.location.search);
-  const businessID = urlParams.get('businessID')
-  const firstName = document.getElementById("employee_first_name").value
-  const lastName = document.getElementById("employee_last_name").value
-  const hourlyWage = document.getElementById("hourly_wage").value
-  const hoursWorked = document.getElementById("hours_worked").value
+  const businessID = urlParams.get("businessID");
+  const firstName = document.getElementById("employee_first_name").value;
+  const lastName = document.getElementById("employee_last_name").value;
+  const hourlyWage = document.getElementById("hourly_wage").value;
+  const hoursWorked = document.getElementById("hours_worked").value;
 
-  console.log("Testing employee info:", firstName, lastName, hourlyWage, hoursWorked )
-  console.log("Testing business id:", businessID)
+  console.log(
+    "Testing employee info:",
+    firstName,
+    lastName,
+    hourlyWage,
+    hoursWorked,
+    businessID
+  );
+  console.log("Testing business id:", businessID);
 
-  
-  let responseJson = await fetchJSON('api/employees', {
+  let responseJson = await fetchJSON("api/employees", {
     method: "POST",
     body: {
       firstName: firstName,
       lastName: lastName,
       hourlyWage: hourlyWage,
       hoursWorked: hoursWorked,
-      businessID: businessID
-    }
-  })
-  console.log(responseJson.status)
+      businessID: businessID,
+    },
+  });
+  console.log(responseJson.status);
 
   if (responseJson.status == "success") {
-    document.getElementById("add_status").innerText = `Save Status: ${responseJson.status}`;
+    document.getElementById(
+      "add_status"
+    ).innerText = `Save Status: ${responseJson.status}`;
+    loadEmployees();
   } else {
-    document.getElementById("add_status").innerText = `Save Status: ${responseJson.status} (Error: ${responseJson.error})`;
+    document.getElementById(
+      "add_status"
+    ).innerText = `Save Status: ${responseJson.status} (Error: ${responseJson.error})`;
+  }
+}
 
+async function loadUserinfo() {
+  try {
+      let user_info_div = document.getElementById("user_info_div");
+
+      const identityInfo = await fetchJSON(`api/users/myIdentity`)
+      if (identityInfo.status == "loggedin") {
+          const username = identityInfo.userInfo.username;
+          const name = identityInfo.userInfo.name;
+          user_info_div.innerHTML = `
+          <p>Name: ${escapeHTML(name)}</p>
+          <p>Username: ${escapeHTML(username)}</p>
+          `;
+      } else {
+          user_info_div.innerHTML = `<p>Please log in</p>`;
+      }
+  } catch(error) {
+      console.log("Error occured when loading user info: " ,error);
   }
 }
