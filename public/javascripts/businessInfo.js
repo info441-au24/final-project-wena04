@@ -19,7 +19,7 @@ async function loadBusinessInfo() {
         <p>Owner: ${business.username}</p>
         <p>Total Earnings: $${business.earnings || 0}</p>
         Add To Total Earnings: <input id="business_earnings_input" type="text" />
-        <button onclick="addBusinessEarnings()">Add Earnings</button>
+        <button onclick="addBusinessEarnings()">Add Earnings</button><span id="add_business_earnings_status"></span>
         </div>
       `;
 
@@ -28,6 +28,37 @@ async function loadBusinessInfo() {
     console.error("Error loading business information:", error);
     document.getElementById("business_info_div").innerHTML =
       "<p>Error loading business information.</p>";
+  }
+}
+
+async function addBusinessEarnings() {
+  try {
+    const urlParams = new URLSearchParams(window.location.search);
+    const businessID = urlParams.get("businessID");
+    const earningsToAdd = parseFloat(document.getElementById("business_earnings_input").value);
+
+    if (isNaN(earningsToAdd)) {
+      document.getElementById("add_business_earnings_status").innerText = "Invalid earnings value.";
+      return;
+    }
+
+    const responseJson = await fetchJSON("/api/businessInfo/addEarnings", {
+      method: 'POST',
+      body:{
+        businessID: businessID,
+        earningsToAdd: earningsToAdd
+      } 
+    });
+
+    if (responseJson.status === "success") {
+      document.getElementById("add_business_earnings_status").innerText = ` Update Business Earnings: ${responseJson.status}`;
+    } else {
+      document.getElementById("add_business_earnings_status").innerText = ` Update Business Earnings: ${responseJson.status}`;
+    }
+    loadBusinessInfo();
+  } catch (error) {
+    console.log("Error adding business earnings");
+    document.getElementById("add_business_earnings_status").innerText = "Error updating earnings.";
   }
 }
 
