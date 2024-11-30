@@ -61,4 +61,23 @@ router.post('/addHours', async(req, res) => {
   }
 })
 
+//POST update wage to employee
+router.post('/updateWage', async(req, res) => {
+  try {
+    const employee = await req.models.Employee.findById({_id: req.body.employeeID})
+    employee.hourlyWage = Number(req.body.wage)
+
+    await employee.save()
+    res.json({
+      status: "Success"
+    })
+  } catch (error) {
+    console.log("Error updating employee's wage: ", error);
+    res.status(500).json({
+      status: "error",
+      error: error.message,
+    });
+  }
+})
+
 export default router;

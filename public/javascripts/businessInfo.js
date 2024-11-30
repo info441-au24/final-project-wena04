@@ -44,7 +44,7 @@ async function addBusinessEarnings() {
 
     const responseJson = await fetchJSON("/api/businessInfo/addEarnings", {
       method: 'POST',
-      body:{
+      body: {
         businessID: businessID,
         earningsToAdd: earningsToAdd
       } 
@@ -135,7 +135,7 @@ async function addEmployee() {
       hourlyWage: hourlyWage,
       hoursWorked: hoursWorked,
       businessID: businessID,
-    },
+    }
   });
   console.log(responseJson.status);
 
@@ -181,7 +181,9 @@ async function loadEmployee(employeeID, firstName, lastName) {
   document.getElementById("employee_edit").innerHTML = `
   <h2>Adjust ${firstName} ${lastName}'s Information</h4>
   <button onClick="addHours('${employeeID}')">Add Hours</button><input id="add_hours" type="text"/><span id="hours_update_status"></span>
-  
+  <br>
+  <br>
+  <button onClick="updateWage('${employeeID}')">Update Wage</button><input id="update_wage" type="text"/><span id="wage_update_status"></span>
   `
 
 }
@@ -197,7 +199,7 @@ async function addHours(employeeID) {
     body: {
       hours: hours,
       employeeID: employeeID
-    },
+    }
   });
 
   if (responseJson.status == "success") {
@@ -205,5 +207,26 @@ async function addHours(employeeID) {
   } else {
     document.getElementById("hours_update_status").innerText = `Update Hours: ${responseJson.status}`
   }
+  document.getElementById("add_hours").value = ""
+  loadEmployees()
+}
+
+async function updateWage(employeeID) {
+  let wage = document.getElementById("update_wage").value
+  console.log(wage)
+
+  let responseJson = await fetchJSON("/api/employees/updateWage", {
+    method: "POST", 
+    body: {
+      wage: wage, 
+      employeeID: employeeID
+    }
+  })
+  if (responseJson.status == "success") {
+    document.getElementById("wage_update_status").innerText = `Update Wage: ${responseJson.status}`
+  } else {
+    document.getElementById("wage_update_status").innerText = `Update Wage: ${responseJson.status}`
+  }
+  document.getElementById("update_wage").value = ""
   loadEmployees()
 }
