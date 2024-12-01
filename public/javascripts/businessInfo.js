@@ -89,7 +89,7 @@ async function loadEmployees() {
             .map((employee) => {
               return `
                 <tr>
-                  <td><button onClick="loadEmployee('${employee._id}', '${employee.firstName}', '${employee.lastName}')">${employee.firstName} ${employee.lastName}</button></td>
+                  <td><button class="employee_button" onClick="loadEmployee('${employee._id}', '${employee.firstName}', '${employee.lastName}')">${employee.firstName} ${employee.lastName}</button></td>
                   <td>${employee.hoursWorked}</td>
                   <td>$${employee.hourlyWage}</td>
                   <td>$${employee.hoursWorked * employee.hourlyWage}</td>
