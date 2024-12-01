@@ -4,8 +4,33 @@ async function init() {
   loadEmployees();
 }
 
+async function loadUserinfo() {
+  try {
+      let user_info_div = document.getElementById("user_info_div");
+
+      const identityInfo = await fetchJSON(`api/users/myIdentity`)
+      if (identityInfo.status == "loggedin") {
+          const username = identityInfo.userInfo.username;
+          const name = identityInfo.userInfo.name;
+          user_info_div.innerHTML = `
+          <p>Name: ${escapeHTML(name)}</p>
+          <p>Username: ${escapeHTML(username)}</p>
+          `;
+      } else {
+          user_info_div.innerHTML = `<a href="/">Please log in</a>`;
+      }
+  } catch(error) {
+      console.log("Error occured when loading user info: " ,error);
+  }
+}
+
 async function loadBusinessInfo() {
   try {
+    const identityInfo = await fetchJSON(`api/users/myIdentity`)
+    if (identityInfo.status != "loggedin") {
+      document.getElementById("business_info_div").innerHTML = `<a href="/">Please log in</a>`;  
+      return
+    } 
     const urlParams = new URLSearchParams(window.location.search);
     const businessID = urlParams.get("businessID");
 
@@ -23,7 +48,7 @@ async function loadBusinessInfo() {
         </div>
       `;
 
-    document.getElementById("business_info_div").innerHTML = businessesHtml;
+    document.getElementById("business_info_div").innerHTML = businessesHtml;  
   } catch (error) {
     console.error("Error loading business information:", error);
     document.getElementById("business_info_div").innerHTML =
@@ -64,6 +89,11 @@ async function addBusinessEarnings() {
 
 async function loadEmployees() {
   try {
+    const identityInfo = await fetchJSON(`api/users/myIdentity`)
+    if (identityInfo.status != "loggedin") {
+      document.getElementById("employee_info_div").innerHTML = `<a href="/">Please log in</a>`;  
+      return
+    }
     const urlParams = new URLSearchParams(window.location.search);
     const businessID = urlParams.get("businessID");
 
@@ -148,26 +178,6 @@ async function addEmployee() {
     document.getElementById(
       "add_status"
     ).innerText = `Save Status: ${responseJson.status} (Error: ${responseJson.error})`;
-  }
-}
-
-async function loadUserinfo() {
-  try {
-      let user_info_div = document.getElementById("user_info_div");
-
-      const identityInfo = await fetchJSON(`api/users/myIdentity`)
-      if (identityInfo.status == "loggedin") {
-          const username = identityInfo.userInfo.username;
-          const name = identityInfo.userInfo.name;
-          user_info_div.innerHTML = `
-          <p>Name: ${escapeHTML(name)}</p>
-          <p>Username: ${escapeHTML(username)}</p>
-          `;
-      } else {
-          user_info_div.innerHTML = `<p>Please log in</p>`;
-      }
-  } catch(error) {
-      console.log("Error occured when loading user info: " ,error);
   }
 }
 
