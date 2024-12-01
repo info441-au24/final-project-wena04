@@ -2,6 +2,11 @@ async function init() {
   loadUserinfo();
   loadBusinessInfo();
   loadEmployees();
+  const identityInfo = await fetchJSON(`api/users/myIdentity`)
+  if (identityInfo.status != "loggedin") {
+    document.getElementById("add_employee").innerHTML = `<a href="/">Please log in</a>`;  
+    return
+  } 
 }
 
 async function loadUserinfo() {
