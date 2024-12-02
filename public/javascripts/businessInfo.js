@@ -110,7 +110,7 @@ async function loadEmployees() {
     // console.log("Employees loaded:", employees);
 
     const employeesHtml = `
-      <table border="1" class="employee-table">
+      <table border="1" class="employee-table table table-bordered">
         <thead>
           <tr>
             <th>Name</th>
