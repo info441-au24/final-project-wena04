@@ -62,6 +62,7 @@ async function loadBusinesses() {
     const businessesJson = await fetchJSON(`/api/business/`);
     let businessesHtml = businessesJson
       .map((business) => {
+        
         return `
         <div class="col-md-4 mb-4">
           <div class="card">
@@ -73,6 +74,7 @@ async function loadBusinesses() {
               <a href="/businessInfo.html?businessID=${encodeURIComponent(
                 business._id
               )}" class="btn btn-primary">Manage Business</a>
+              ${loadLogo(business.logo)}
             </div>
           </div>
         </div>
@@ -83,5 +85,14 @@ async function loadBusinesses() {
     document.getElementById("business_results").innerHTML = businessesHtml;
   } catch (error) {
     console.error("Error fetching business names:", error);
+  }
+}
+
+function loadLogo(businessLogo) {
+  if (businessLogo) {
+    return `<img src="${businessLogo}" class="img-fluid card-img-top">
+`
+  } else {
+    return ``
   }
 }
