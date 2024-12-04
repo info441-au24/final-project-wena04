@@ -1,42 +1,46 @@
 async function init() {
-  loadIdentity()
+  loadIdentity();
   loadUserinfo();
   loadBusinessInfo();
   loadEmployees();
-  const identityInfo = await fetchJSON(`api/users/myIdentity`)
+  const identityInfo = await fetchJSON(`api/users/myIdentity`);
   if (identityInfo.status != "loggedin") {
-    document.getElementById("add_employee").innerHTML = `<a href="/">Please log in</a>`;  
-    return
-  } 
+    document.getElementById(
+      "add_employee"
+    ).innerHTML = `<a href="/">Please log in</a>`;
+    return;
+  }
 }
 
 async function loadUserinfo() {
   try {
-      let user_info_div = document.getElementById("user_info_div");
+    let user_info_div = document.getElementById("user_info_div");
 
-      const identityInfo = await fetchJSON(`api/users/myIdentity`)
-      if (identityInfo.status == "loggedin") {
-          const username = identityInfo.userInfo.username;
-          const name = identityInfo.userInfo.name;
-          user_info_div.innerHTML = `
+    const identityInfo = await fetchJSON(`api/users/myIdentity`);
+    if (identityInfo.status == "loggedin") {
+      const username = identityInfo.userInfo.username;
+      const name = identityInfo.userInfo.name;
+      user_info_div.innerHTML = `
           <p>Name: ${escapeHTML(name)}</p>
           <p>Username: ${escapeHTML(username)}</p>
           `;
-      } else {
-          user_info_div.innerHTML = `<a href="/">Please log in</a>`;
-      }
-  } catch(error) {
-      console.log("Error occured when loading user info: " ,error);
+    } else {
+      user_info_div.innerHTML = `<a href="/">Please log in</a>`;
+    }
+  } catch (error) {
+    console.log("Error occured when loading user info: ", error);
   }
 }
 
 async function loadBusinessInfo() {
   try {
-    const identityInfo = await fetchJSON(`api/users/myIdentity`)
+    const identityInfo = await fetchJSON(`api/users/myIdentity`);
     if (identityInfo.status != "loggedin") {
-      document.getElementById("business_info_div").innerHTML = `<a href="/">Please log in</a>`;  
-      return
-    } 
+      document.getElementById(
+        "business_info_div"
+      ).innerHTML = `<a href="/">Please log in</a>`;
+      return;
+    }
     const urlParams = new URLSearchParams(window.location.search);
     const businessID = urlParams.get("businessID");
 
@@ -45,16 +49,24 @@ async function loadBusinessInfo() {
     );
 
     const businessesHtml = `
-        <div class="business-info">
-        <p>Business: ${business.businessName}</p>
-        <p>Owner: ${business.username}</p>
-        <p>Total Earnings: $${business.earnings || 0}</p>
-        Add To Total Earnings: <input id="business_earnings_input" type="text" />
-        <button onclick="addBusinessEarnings()">Add Earnings</button><span id="add_business_earnings_status"></span>
+        <div class="card mb-4">
+        <div class="card-body">
+          <h5 class="card-title">${business.businessName}</h5>
+          <p class="card-text"><strong>Owner:</strong> ${business.username}</p>
+          <p class="card-text"><strong>Total Earnings:</strong> $${
+            business.earnings || 0
+          }</p>
+          <div class="mt-3">
+            <label for="business_earnings_input" class="form-label">Add to Total Earnings:</label>
+            <input id="business_earnings_input" type="text" class="form-control mb-2" placeholder="Enter amount" />
+            <button class="btn btn-success" onclick="addBusinessEarnings()">Add Earnings</button>
+            <span id="add_business_earnings_status" class="ms-2"></span>
+          </div>
         </div>
+      </div>
       `;
 
-    document.getElementById("business_info_div").innerHTML = businessesHtml;  
+    document.getElementById("business_info_div").innerHTML = businessesHtml;
   } catch (error) {
     console.error("Error loading business information:", error);
     document.getElementById("business_info_div").innerHTML =
@@ -66,39 +78,49 @@ async function addBusinessEarnings() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const businessID = urlParams.get("businessID");
-    const earningsToAdd = parseFloat(document.getElementById("business_earnings_input").value);
+    const earningsToAdd = parseFloat(
+      document.getElementById("business_earnings_input").value
+    );
 
     if (isNaN(earningsToAdd)) {
-      document.getElementById("add_business_earnings_status").innerText = "Invalid earnings value.";
+      document.getElementById("add_business_earnings_status").innerText =
+        "Invalid earnings value.";
       return;
     }
 
     const responseJson = await fetchJSON("/api/businessInfo/addEarnings", {
-      method: 'POST',
+      method: "POST",
       body: {
         businessID: businessID,
-        earningsToAdd: earningsToAdd
-      } 
+        earningsToAdd: earningsToAdd,
+      },
     });
 
     if (responseJson.status === "success") {
-      document.getElementById("add_business_earnings_status").innerText = ` Update Business Earnings: ${responseJson.status}`;
+      document.getElementById(
+        "add_business_earnings_status"
+      ).innerText = ` Update Business Earnings: ${responseJson.status}`;
     } else {
-      document.getElementById("add_business_earnings_status").innerText = ` Update Business Earnings: ${responseJson.status}`;
+      document.getElementById(
+        "add_business_earnings_status"
+      ).innerText = ` Update Business Earnings: ${responseJson.status}`;
     }
     loadBusinessInfo();
   } catch (error) {
     console.log("Error adding business earnings");
-    document.getElementById("add_business_earnings_status").innerText = "Error updating earnings.";
+    document.getElementById("add_business_earnings_status").innerText =
+      "Error updating earnings.";
   }
 }
 
 async function loadEmployees() {
   try {
-    const identityInfo = await fetchJSON(`api/users/myIdentity`)
+    const identityInfo = await fetchJSON(`api/users/myIdentity`);
     if (identityInfo.status != "loggedin") {
-      document.getElementById("employee_info_div").innerHTML = `<a href="/">Please log in</a>`;  
-      return
+      document.getElementById(
+        "employee_info_div"
+      ).innerHTML = `<a href="/">Please log in</a>`;
+      return;
     }
     const urlParams = new URLSearchParams(window.location.search);
     const businessID = urlParams.get("businessID");
@@ -110,7 +132,8 @@ async function loadEmployees() {
     );
     // console.log("Employees loaded:", employees);
 
-    const capitalize = (name) => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+    const capitalize = (name) =>
+      name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 
     const employeesHtml = `
       <table border="1" class="employee-table table table-bordered">
@@ -129,7 +152,11 @@ async function loadEmployees() {
               const lastName = capitalize(employee.lastName);
               return `
                 <tr>
-                  <td><button class="employee_button" onClick="loadEmployee('${employee._id}', '${firstName}', '${lastName}')">${firstName} ${lastName}</button></td>
+                  <td><button class="employee_button" onClick="loadEmployee('${
+                    employee._id
+                  }', '${employee.firstName}', '${employee.lastName}')">${
+                employee.firstName
+              } ${employee.lastName}</button></td>
                   <td>${employee.hoursWorked}</td>
                   <td>$${employee.hourlyWage}</td>
                   <td>$${employee.hoursWorked * employee.hourlyWage}</td>
@@ -175,7 +202,7 @@ async function addEmployee() {
       hourlyWage: hourlyWage,
       hoursWorked: hoursWorked,
       businessID: businessID,
-    }
+    },
   });
   console.log(responseJson.status);
 
@@ -193,13 +220,14 @@ async function addEmployee() {
 
 //onClick function to create div and input field for specific employee using the passed employee name and ID
 async function loadEmployee(employeeID, firstName, lastName) {
-  console.log("Entering loadEmployee function")
+  console.log("Entering loadEmployee function");
   // console.log(employeeID)
   // console.log(firstName)
   // console.log(lastName)
 
   // Capitalize first and last names
-  const capitalize = (name) => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  const capitalize = (name) =>
+    name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
   const capitalizedFirstName = capitalize(firstName);
   const capitalizedLastName = capitalize(lastName);
 
@@ -209,13 +237,12 @@ async function loadEmployee(employeeID, firstName, lastName) {
   <br>
   <br>
   <button onClick="updateWage('${employeeID}')">Update Wage</button><input id="update_wage" type="text"/><span id="wage_update_status"></span>
-  `
-
+  `;
 }
 
 //New api call to employees/addHours to incrememnt and post added hours
 async function addHours(employeeID) {
-  const hours = document.getElementById("add_hours").value
+  const hours = document.getElementById("add_hours").value;
   // console.log(hours)
   // console.log(employeeID)
 
@@ -223,35 +250,43 @@ async function addHours(employeeID) {
     method: "POST",
     body: {
       hours: hours,
-      employeeID: employeeID
-    }
+      employeeID: employeeID,
+    },
   });
 
   if (responseJson.status == "success") {
-    document.getElementById("hours_update_status").innerText = `Update Hours: ${responseJson.status}`
+    document.getElementById(
+      "hours_update_status"
+    ).innerText = `Update Hours: ${responseJson.status}`;
   } else {
-    document.getElementById("hours_update_status").innerText = `Update Hours: ${responseJson.status}`
+    document.getElementById(
+      "hours_update_status"
+    ).innerText = `Update Hours: ${responseJson.status}`;
   }
-  document.getElementById("add_hours").value = ""
-  loadEmployees()
+  document.getElementById("add_hours").value = "";
+  loadEmployees();
 }
 
 async function updateWage(employeeID) {
-  let wage = document.getElementById("update_wage").value
-  console.log(wage)
+  let wage = document.getElementById("update_wage").value;
+  console.log(wage);
 
   let responseJson = await fetchJSON("/api/employees/updateWage", {
-    method: "POST", 
+    method: "POST",
     body: {
-      wage: wage, 
-      employeeID: employeeID
-    }
-  })
+      wage: wage,
+      employeeID: employeeID,
+    },
+  });
   if (responseJson.status == "success") {
-    document.getElementById("wage_update_status").innerText = `Update Wage: ${responseJson.status}`
+    document.getElementById(
+      "wage_update_status"
+    ).innerText = `Update Wage: ${responseJson.status}`;
   } else {
-    document.getElementById("wage_update_status").innerText = `Update Wage: ${responseJson.status}`
+    document.getElementById(
+      "wage_update_status"
+    ).innerText = `Update Wage: ${responseJson.status}`;
   }
-  document.getElementById("update_wage").value = ""
-  loadEmployees()
+  document.getElementById("update_wage").value = "";
+  loadEmployees();
 }
