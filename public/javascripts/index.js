@@ -37,6 +37,8 @@ async function addBusiness() {
 }
 
 async function loadBusinesses() {
+  const capitalize = (name) =>name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+
   try {
     console.log("Fetching business names...");
     const businessesJson = await fetchJSON(`/api/business/`);
@@ -46,7 +48,7 @@ async function loadBusinesses() {
         <div class="col-md-4 mb-4">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">${business.businessName}</h5>
+              <h5 class="card-title">${capitalize(business.businessName)}</h5>
               <p class="card-text">
                 <strong>Owner:</strong> ${business.username}
               </p>
