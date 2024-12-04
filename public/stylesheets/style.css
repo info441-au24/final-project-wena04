@@ -35,33 +35,6 @@ nav.navbar {
   color: #495057;
 }
 
-.btn-primary {
-  background-color: #007bff;
-  border: none;
-  font-weight: 500;
-  padding: 10px 20px;
-  border-radius: 5px;
-  transition: all 0.2s ease;
-}
-
-.btn-primary:hover {
-  background-color: #0056b3;
-  color: #ffffff;
-}
-
-.btn-success {
-  background-color: #28a745;
-  border: none;
-  font-weight: 500;
-  padding: 10px 20px;
-  border-radius: 5px;
-  transition: all 0.2s ease;
-}
-
-.btn-success:hover {
-  background-color: #218838;
-}
-
 a {
   color: #0056b3;
   text-decoration: none;
