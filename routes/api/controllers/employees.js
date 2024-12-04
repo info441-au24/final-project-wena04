@@ -80,4 +80,24 @@ router.post('/updateWage', async(req, res) => {
   }
 })
 
+
+router.delete("/", async(req, res) => {
+  try {
+    const employee = await req.models.Employee.findById({_id: req.body.employeeID})
+    const deleteResult = await req.models.Employee.deleteOne({_id: employee})
+    console.log(`successfully deleted employee with ID: ${employee}`);
+
+    return res.json({
+      status: "Success"
+    })
+
+  } catch (error) {
+    console.log("Error deleting employee:", error);
+    res.status(500).json({
+      status: "error",
+      error: error.message,
+    });
+  }
+}) 
+
 export default router;

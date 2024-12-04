@@ -246,6 +246,8 @@ async function loadEmployee(employeeID, firstName, lastName) {
   <br>
   <br>
   <input id="update_wage" type="text"/>  <button class="btn btn-primary btn-sm" onClick="updateWage('${employeeID}')">Update Wage</button><span id="wage_update_status"></span>
+  <div class="d-flex justify-content-end align-items-center"><p class="me-3 mb-0"><strong>Note</strong>: Deleting an employee cannot be undone</p><button class="btn btn-danger btn-sm" onclick="deleteEmployee('${employeeID}')">Delete Employee</button></div>
+  <span id="delete_employee_status"></span>
   `;
 }
 
@@ -297,6 +299,23 @@ async function updateWage(employeeID) {
     ).innerText = `Update Wage: ${responseJson.status}`;
   }
   document.getElementById("update_wage").value = "";
+  loadEmployees();
+}
+
+async function deleteEmployee(employeeID) {
+  let responseJson = await fetchJSON("/api/employees/", {
+    method: "DELETE",
+    body: {
+      employeeID: employeeID
+    }
+  })
+
+  if (responseJson.status === "Success") {
+    document.getElementById("delete_employee_status").innerText = `Success: employee deleted`
+  } else {
+    document.getElementById("delete_employee_status").innerText = `Error: employee failed to delete`
+  }
+  document.getElementById("employee_edit").innerHTML = ``;
   loadEmployees();
 }
 
