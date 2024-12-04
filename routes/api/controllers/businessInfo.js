@@ -1,6 +1,9 @@
 import express from "express";
 var router = express.Router();
 
+import multer from 'multer'
+var upload = multer({dest: './public/uploads/'})
+
 // GET current business information
 router.get("/", async (req, res) => {
   try {
@@ -21,6 +24,21 @@ router.get("/", async (req, res) => {
     res.status(500).json({ status: "error", error: error.message });
   }
 });
+
+
+router.post('/upload', upload.single('file'), (req, res) => {
+  try {
+    console.log("entering upload")
+    return res.json({
+      status: "Success"
+    })
+
+  } catch (error) {
+    res.status(500).json({ status: "error", error: error.message });
+  }
+});
+
+
 
 router.post("/addEarnings", async (req, res) => {
   // console.log("request body", req.body);

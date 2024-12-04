@@ -23,7 +23,7 @@ async function loadUserinfo() {
       user_info_div.innerHTML = `
           <p>Name: ${escapeHTML(name)}</p>
           <p>Username: ${escapeHTML(username)}</p>
-          `;
+          `
     } else {
       user_info_div.innerHTML = `<a href="/">Please log in</a>`;
     }
@@ -74,6 +74,7 @@ async function loadBusinessInfo() {
       "<p>Error loading business information.</p>";
   }
 }
+
 
 async function addBusinessEarnings() {
   try {
