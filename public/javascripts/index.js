@@ -11,10 +11,17 @@ async function init() {
 }
 
 async function addBusiness() {
+  let identityInfo = await fetchJSON(`api/users/myIdentity`);
+  if (identityInfo.status == "loggedout") {
+    document.getElementById("postStatus").innerText = "Please log in to add a business.";
+    return;
+  }
+
   const businessName = document.getElementById("business_name_input").value;
   console.log(businessName);
 
   console.log("making request to post new business name");
+
 
   if (businessName == "") {
     console.log("The businessName input field is empty.");
