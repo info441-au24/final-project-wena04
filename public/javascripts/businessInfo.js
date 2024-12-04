@@ -233,10 +233,10 @@ async function loadEmployee(employeeID, firstName, lastName) {
 
   document.getElementById("employee_edit").innerHTML = `
   <h2>Adjust ${capitalizedFirstName} ${capitalizedLastName}'s Information</h4>
-  <button onClick="addHours('${employeeID}')">Add Hours</button><input id="add_hours" type="text"/><span id="hours_update_status"></span>
+  <input id="add_hours" type="text"/>  <button class="btn btn-primary btn-sm" onClick="addHours('${employeeID}')">Add Hours</button><span id="hours_update_status"></span>
   <br>
   <br>
-  <button onClick="updateWage('${employeeID}')">Update Wage</button><input id="update_wage" type="text"/><span id="wage_update_status"></span>
+  <input id="update_wage" type="text"/>  <button class="btn btn-primary btn-sm" onClick="updateWage('${employeeID}')">Update Wage</button><span id="wage_update_status"></span>
   `;
 }
 
