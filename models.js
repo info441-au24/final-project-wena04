@@ -10,14 +10,6 @@ await mongoose.connect(
 
 console.log("successfully connected to mongodb");
 
-const userSchema = new mongoose.Schema({
-  username: String,
-});
-
-models.User = mongoose.model("User", userSchema);
-
-console.log("user models created");
-
 const businessSchema = new mongoose.Schema({
   businessName: String,
   username: String,

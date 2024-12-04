@@ -16,6 +16,11 @@ async function addBusiness() {
 
   console.log("making request to post new business name");
 
+  if (businessName == "") {
+    console.log("The businessName input field is empty.");
+    document.getElementById("postStatus").innerText = "Please enter business name.";
+    return;
+  }
   // fetchJSON not defined error
   // copied utils.js file to implement fetchJSON()
   let responseJson = await fetchJSON(`api/business`, {

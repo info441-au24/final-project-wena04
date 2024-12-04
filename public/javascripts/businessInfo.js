@@ -192,6 +192,18 @@ async function addEmployee() {
   );
   console.log("Testing business id:", businessID);
 
+  if (firstName == "") {
+    console.log("The firstName input field is empty.");
+    document.getElementById("add_status").innerText = "Please enter employee's first name.";
+    return;
+  }
+
+  if (lastName == "") {
+    console.log("The lastName input field is empty.");
+    document.getElementById("add_status").innerText = "Please enter employee's last name."
+    return;
+  }
+
   let responseJson = await fetchJSON("api/employees", {
     method: "POST",
     body: {
