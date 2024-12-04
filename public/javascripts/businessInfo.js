@@ -136,7 +136,7 @@ async function loadEmployees() {
     const capitalize = (name) =>name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 
     const employeesHtml = `
-      <table border="1" class="employee-table table table-bordered">
+      <table class="employee-table table table-bordered">
         <thead>
           <tr>
             <th>Name</th>
@@ -145,7 +145,7 @@ async function loadEmployees() {
             <th>Earnings</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="table-group-divider">
           ${employees
             .map((employee) => {
               const firstName = capitalize(employee.firstName);
