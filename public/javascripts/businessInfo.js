@@ -1,4 +1,5 @@
 async function init() {
+  loadIdentity()
   loadUserinfo();
   loadBusinessInfo();
   loadEmployees();
@@ -109,6 +110,8 @@ async function loadEmployees() {
     );
     // console.log("Employees loaded:", employees);
 
+    const capitalize = (name) => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+
     const employeesHtml = `
       <table border="1" class="employee-table table table-bordered">
         <thead>
@@ -122,9 +125,11 @@ async function loadEmployees() {
         <tbody>
           ${employees
             .map((employee) => {
+              const firstName = capitalize(employee.firstName);
+              const lastName = capitalize(employee.lastName);
               return `
                 <tr>
-                  <td><button class="employee_button" onClick="loadEmployee('${employee._id}', '${employee.firstName}', '${employee.lastName}')">${employee.firstName} ${employee.lastName}</button></td>
+                  <td><button class="employee_button" onClick="loadEmployee('${employee._id}', '${firstName}', '${lastName}')">${firstName} ${lastName}</button></td>
                   <td>${employee.hoursWorked}</td>
                   <td>$${employee.hourlyWage}</td>
                   <td>$${employee.hoursWorked * employee.hourlyWage}</td>
@@ -193,8 +198,13 @@ async function loadEmployee(employeeID, firstName, lastName) {
   // console.log(firstName)
   // console.log(lastName)
 
+  // Capitalize first and last names
+  const capitalize = (name) => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  const capitalizedFirstName = capitalize(firstName);
+  const capitalizedLastName = capitalize(lastName);
+
   document.getElementById("employee_edit").innerHTML = `
-  <h2>Adjust ${firstName} ${lastName}'s Information</h4>
+  <h2>Adjust ${capitalizedFirstName} ${capitalizedLastName}'s Information</h4>
   <button onClick="addHours('${employeeID}')">Add Hours</button><input id="add_hours" type="text"/><span id="hours_update_status"></span>
   <br>
   <br>

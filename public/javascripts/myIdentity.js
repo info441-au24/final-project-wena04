@@ -7,8 +7,8 @@ async function loadIdentity() {
             const username = identityInfo.userInfo.username;
             const name = identityInfo.userInfo.name;
             identity_div.innerHTML = `
-            <p class="d-inline-block me-3">${escapeHTML(name)} (${escapeHTML(username)})</p>
-            <a href="/signout" class="btn btn-danger" role="button">Log out</a>`;
+            <p class="me-3 mb-0">Business Owner: ${escapeHTML(name)} (${escapeHTML(username)})</p>
+            <a href="/signout" class="btn btn-danger me-2" role="button">Log out</a>`;
         } else {
             identity_div.innerHTML = `
             <a href="/signin" class="btn btn-primary" role="button">Log in</a>`;

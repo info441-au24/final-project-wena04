@@ -7,40 +7,49 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="/stylesheets/style.css" />
     <script src="javascripts/index.js"></script>
     <script src="javascripts/utils.js"></script>
     <script src="javascripts/businessInfo.js"></script>
+    <script src="javascripts/myIdentity.js"></script>
   </head>
 
-  <body onload="init()" class="p-5">
-    <div><a href="/">Return to Homepage</a></div>
-    <h1>Business Management Tool</h1>
+  <body onload="init()">
+    <nav class="navbar bg-light h-auto">
+      <a href="/" class="my-auto ps-3 link-dark"><i class="bi bi-briefcase-fill h1"></i></a>
+      <div id="identity_div" class="ms-auto p-2 d-flex flex-row align-items-center">loading...</div>
+    </nav>
 
-    <h2>Info for user: <span id="username-span"></span></h2>
-    <div id="user_info_div">loading current user info...</div>
-
-    <h2>Info for Business: <span id="businessname-span"></span></h2>
-    <div id="business_info_div">loading business info...</div>
-
-    <h2>All Employees</h2>
-    <div id="employee_info_div">loading employee info table...</div>
-
-    <div id="employee_edit"></div>
-
-    <div id="posts_box"></div>
-    <h2>Add Employee</h2>
-    <div id="add_employee">
-      First Name: <input id="employee_first_name" type="text" />
-      <br><br>
-      Last Name: <input id="employee_last_name" type="text" />
-      <br><br>
-      Hourly Wage: <input id="hourly_wage" type="text" />
-      <br><br>
-      Hours Worked: <input id="hours_worked" type="text" />
-      <br><br>
-      <button onclick="addEmployee()">Add Employee</button>
-      <span id="add_status"></span>
+    <div class="p-5">
+      <div><a href="/">Return to Homepage</a></div>
+      <!-- <h1>Business Management Tool</h1> -->
+  
+      <h2 class="pt-3">Info for user: <span id="username-span"></span></h2>
+      <div id="user_info_div">loading current user info...</div>
+  
+      <h2>Info for Business: <span id="businessname-span"></span></h2>
+      <div id="business_info_div">loading business info...</div>
+  
+      <h2 class="pt-3">All Employees</h2>
+      <div id="employee_info_div">loading employee info table...</div>
+  
+      <div id="employee_edit"></div>
+  
+      <div id="posts_box"></div>
+      <h2>Add Employee</h2>
+      <div id="add_employee">
+        First Name: <input id="employee_first_name" type="text" />
+        <br><br>
+        Last Name: <input id="employee_last_name" type="text" />
+        <br><br>
+        Hourly Wage: <input id="hourly_wage" type="text" />
+        <br><br>
+        Hours Worked: <input id="hours_worked" type="text" />
+        <br><br>
+        <button onclick="addEmployee()">Add Employee</button>
+        <span id="add_status"></span>
+      </div>
     </div>
   </body>
 </html>
