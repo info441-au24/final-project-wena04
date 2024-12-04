@@ -33,6 +33,7 @@ async function loadUserinfo() {
 }
 
 async function loadBusinessInfo() {
+  const capitalize = (name) => name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
   try {
     const identityInfo = await fetchJSON(`api/users/myIdentity`);
     if (identityInfo.status != "loggedin") {
@@ -51,7 +52,7 @@ async function loadBusinessInfo() {
     const businessesHtml = `
         <div class="card mb-4">
         <div class="card-body">
-          <h5 class="card-title">${business.businessName}</h5>
+          <h5 class="card-title">${capitalize(business.businessName)}</h5>
           <p class="card-text"><strong>Owner:</strong> ${business.username}</p>
           <p class="card-text"><strong>Total Earnings:</strong> $${
             business.earnings || 0
