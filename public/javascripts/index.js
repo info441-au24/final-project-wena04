@@ -11,28 +11,33 @@ async function init() {
 }
 
 async function addBusiness() {
-  let identityInfo = await fetchJSON(`api/users/myIdentity`);
-  if (identityInfo.status == "loggedout") {
-    document.getElementById("postStatus").innerText = "Please log in to add a business.";
-    return;
-  }
-
   const businessName = document.getElementById("business_name_input").value;
-  console.log(businessName);
 
+  const imgFile = document.getElementById("logoFile").files[0]
+
+  //reference for FormData objects https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest_API/Using_FormData_Objects
+  const formData = new FormData()
+  const changedFileName = new File([imgFile], businessName + "." + imgFile.name.split('.').pop(), {type: imgFile.type})
+  // console.log(imgFile.files[0])
+  formData.append('file', changedFileName);
+  formData.append('businessName', businessName)
+
+
+  let uploadResponse = await fetch(`api/business/upload`, {
+    method: "POST",
+    body: formData,
+  });
+
+  // console.log(businessName);
+  const logoPath = await uploadResponse.json();
+  console.log(logoPath.filePath)
   console.log("making request to post new business name");
 
-
-  if (businessName == "") {
-    console.log("The businessName input field is empty.");
-    document.getElementById("postStatus").innerText = "Please enter business name.";
-    return;
-  }
   // fetchJSON not defined error
   // copied utils.js file to implement fetchJSON()
   let responseJson = await fetchJSON(`api/business`, {
     method: "POST",
-    body: { businessName: businessName },
+    body: { businessName: businessName, logo: logoPath.filePath },
   });
   console.log("response received. successfully saved business");
 
@@ -45,6 +50,7 @@ async function addBusiness() {
       "postStatus"
     ).innerText = `Status: ${responseJson.status} (${responseJson.error})`;
   }
+
   loadBusinesses();
 }
 
