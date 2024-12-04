@@ -32,7 +32,7 @@
         <div id="user_info_div" class="alert alert-info">
         loading current user info...
       </div>
-    </div>
+      </div>
   
       <div class="mb-4">
       <h2>Info for Business: <span id="businessname-span"></span></h2>
@@ -40,11 +40,11 @@
       </div>
 
       <div class="mb-4">
-      <h2 class="pt-3">All Employees</h2>
-        <div id="employee_info_div" class="alert alert-info">
-        loading employee info table...
+        <h2 class="pt-3">All Employees</h2>
+          <div id="employee_info_div" class="alert alert-info">
+          loading employee info table...
+        </div>
       </div>
-    </div>
   
       <div id="employee_edit" class="mb-4"></div>
   
@@ -73,7 +73,18 @@
         </button>
           <span id="add_status" class="text-success"></span>
       </div>
+      </form>
+
+      <hr class="mt-5">
+
+      <div class="d-flex justify-content-end align-items-center">
+        <p class="me-3 mb-0"><strong class="text-danger">Note</strong>: Deleting your business cannot be undone</p>
+        <button class="btn btn-danger" type="button" onclick="deleteBusiness()">
+          <a href="/" class="text-reset text-decoration-none">Delete Business</a>
+        </button>
       </div>
-    </form>
+    </div>
+    
+    
   </body>
 </html>

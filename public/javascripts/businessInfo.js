@@ -287,3 +287,19 @@ async function updateWage(employeeID) {
   document.getElementById("update_wage").value = "";
   loadEmployees();
 }
+
+async function deleteBusiness() {
+  const urlParams = new URLSearchParams(window.location.search);
+  const businessID = urlParams.get("businessID");
+
+  const responseJson = await fetchJSON("/api/businessInfo/", {
+    method: 'DELETE',
+    body: { businessID: businessID }
+  });
+
+  if (responseJson.status === "success") {
+    console.log("Successfully deleted business")
+  } else {
+    console.log("Error deleting business:", responseJson.error);
+  }
+}

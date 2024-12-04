@@ -47,4 +47,34 @@ router.post("/addEarnings", async (req, res) => {
 })
 
 
+router.delete("/", async (req, res) => {
+  console.log("request body", req.body);
+  try {
+    const { businessID } = req.body;
+
+    if (!req.session.isAuthenticated) {
+      return res.status(401).json({
+        status: "error",
+        error: "not logged in"
+      });
+    }
+
+    await req.models.Employee.deleteMany({businessID: businessID})
+    const deleteResult = await req.models.Business.deleteOne({ _id: businessID})
+
+    console.log(`successfully deleted business with ID: ${businessID}`);
+
+    return res.json({
+      status: "Success"
+    })
+
+  } catch (error) {
+    console.log("error deleting business:", error)
+    return res.status(500).json({
+      status: "error",
+      error: error
+    })
+  }
+})
+
 export default router;
