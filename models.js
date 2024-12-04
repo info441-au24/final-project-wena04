@@ -17,6 +17,7 @@ const businessSchema = new mongoose.Schema({
   // also don't think we need this earning field as we can calculate it
   // by doing some math on like all the employees and their hours and such
   earnings: Number,
+  logo: String
 });
 
 models.Business = mongoose.model("Business", businessSchema);
