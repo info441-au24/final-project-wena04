@@ -2,8 +2,8 @@
 body {
   padding-top: 60px;
   font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  background-color: #f8f9fa; /* Light background for better contrast */
-  color: #343a40; /* Dark gray for text */
+  background-color: #f8f9fa;
+  color: #343a40;
 }
 
 /* Navbar */
@@ -11,7 +11,6 @@ nav.navbar {
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 1000; /* Ensure navbar stays above other elements */
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
@@ -20,7 +19,7 @@ nav.navbar {
 .card {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border: none;
-  border-radius: 8px; /* Rounded corners */
+  border-radius: 8px;
   background-color: #ffffff;
   margin-bottom: 20px;
 }
@@ -35,7 +34,6 @@ nav.navbar {
   color: #495057;
 }
 
-/* Buttons */
 .btn-primary {
   background-color: #007bff;
   border: none;
@@ -63,7 +61,6 @@ nav.navbar {
   background-color: #218838;
 }
 
-/* Links */
 a {
   color: #0056b3;
   text-decoration: none;
@@ -74,7 +71,6 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Tables */
 table {
   background-color: #ffffff;
   border-collapse: collapse;
@@ -98,7 +94,6 @@ tbody tr:hover {
   background-color: #f1f3f5;
 }
 
-/* Employee Button */
 .employee_button {
   background: none !important;
   border: none;
@@ -113,7 +108,6 @@ tbody tr:hover {
   color: #0056b3;
 }
 
-/* Forms and Input Fields */
 #add_employee .form-control {
   margin-bottom: 10px;
   border-radius: 5px;
@@ -126,10 +120,9 @@ tbody tr:hover {
 }
 
 #add_status.error {
-  color: #dc3545; /* Red for errors */
+  color: #dc3545;
 }
 
-/* Headings */
 h1,
 h2,
 h3,
@@ -153,13 +146,11 @@ h3 {
   margin-bottom: 10px;
 }
 
-/* Alert Styles */
 .alert {
   font-size: 1.1rem;
   border-radius: 5px;
 }
 
-/* Utility Classes */
 .section-padding {
   padding: 20px 0;
 }
