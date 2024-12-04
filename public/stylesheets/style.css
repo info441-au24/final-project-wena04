@@ -35,15 +35,6 @@ nav.navbar {
   color: #495057;
 }
 
-a {
-  color: #0056b3;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #003f88;
-  text-decoration: underline;
-}
 
 table {
   background-color: #ffffff;
