@@ -1,6 +1,37 @@
 import express from "express";
 var router = express.Router();
 
+import multer from 'multer'
+
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/uploads')
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname)
+  }
+})
+
+const upload = multer({ storage });
+
+
+//reference for using multer to upload images https://www.youtube.com/watch?v=i8yxx6V9UdM&t=278s
+router.post('/upload', upload.single('file'), (req, res) => {
+  console.log("Entering uploads")
+  console.log(req.file)
+  console.log(req.body.businessName)
+
+  const filePath = `/uploads/${req.file.filename}`
+  console.log(filePath)
+  res.json({
+    status: "success",
+    filePath: filePath
+  })
+})
+
+
 // GET all business information
 router.get("/", async (req, res) => {
   try {
@@ -37,10 +68,12 @@ router.post("/", async (req, res) => {
       return;
     }
     const newBusinessName = req.body.businessName;
+    const logoPath = req.body.logo
 
     const newBusiness = new req.models.Business({
       businessName: newBusinessName,
       username: req.session.account.username,
+      logo: logoPath
     });
 
     await newBusiness.save();
