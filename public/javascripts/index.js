@@ -39,7 +39,9 @@ async function addBusiness() {
       body: { businessName: businessName, logo: logoPath.filePath },
     });
     console.log("response received. successfully saved business");
-  
+    document.getElementById("business_name_input").value = "";
+    document.getElementById("logoFile").value = "";
+    
     if (responseJson.status == "success") {
       document.getElementById(
         "postStatus"
@@ -55,6 +57,7 @@ async function addBusiness() {
       body: { businessName: businessName},
     });
     console.log("response received. successfully saved business");
+    document.getElementById("business_name_input").value = "";
   
     if (responseJson.status == "success") {
       document.getElementById(
@@ -66,9 +69,6 @@ async function addBusiness() {
       ).innerText = `Status: ${responseJson.status} (${responseJson.error})`;
     }
   }
-  
-
-
   
   loadBusinesses();
 }
