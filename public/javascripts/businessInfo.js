@@ -327,7 +327,11 @@ async function deleteBusiness() {
     method: 'DELETE',
     body: { businessID: businessID }
   });
+  //redirects to index.html page
+  window.location.href = "index.html"
 
+  //option to reload business page after deletion to show that it works
+  // loadBusinessInfo()
   if (responseJson.status === "success") {
     console.log("Successfully deleted business")
   } else {
