@@ -16,41 +16,60 @@ async function addBusiness() {
   const imgFile = document.getElementById("logoFile").files[0]
 
   //reference for FormData objects https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest_API/Using_FormData_Objects
-  const formData = new FormData()
-  const changedFileName = new File([imgFile], businessName + "." + imgFile.name.split('.').pop(), {type: imgFile.type})
-  // console.log(imgFile.files[0])
-  formData.append('file', changedFileName);
-  formData.append('businessName', businessName)
-
-
-  let uploadResponse = await fetch(`api/business/upload`, {
-    method: "POST",
-    body: formData,
-  });
-
-  // console.log(businessName);
-  const logoPath = await uploadResponse.json();
-  console.log(logoPath.filePath)
-  console.log("making request to post new business name");
-
-  // fetchJSON not defined error
-  // copied utils.js file to implement fetchJSON()
-  let responseJson = await fetchJSON(`api/business`, {
-    method: "POST",
-    body: { businessName: businessName, logo: logoPath.filePath },
-  });
-  console.log("response received. successfully saved business");
-
-  if (responseJson.status == "success") {
-    document.getElementById(
-      "postStatus"
-    ).innerText = `Status: ${responseJson.status}`;
+  if (imgFile) {
+    const formData = new FormData()
+    const changedFileName = new File([imgFile], businessName + "." + imgFile.name.split('.').pop(), {type: imgFile.type})
+    // console.log(imgFile.files[0])
+    formData.append('file', changedFileName);
+    formData.append('businessName', businessName)
+    let uploadResponse = await fetch(`api/business/upload`, {
+      method: "POST",
+      body: formData,
+    });
+  
+    // console.log(businessName);
+    const logoPath = await uploadResponse.json();
+    console.log(logoPath.filePath)
+    console.log("making request to post new business name");
+  
+    // fetchJSON not defined error
+    // copied utils.js file to implement fetchJSON()
+    let responseJson = await fetchJSON(`api/business`, {
+      method: "POST",
+      body: { businessName: businessName, logo: logoPath.filePath },
+    });
+    console.log("response received. successfully saved business");
+  
+    if (responseJson.status == "success") {
+      document.getElementById(
+        "postStatus"
+      ).innerText = `Status: ${responseJson.status}`;
+    } else {
+      document.getElementById(
+        "postStatus"
+      ).innerText = `Status: ${responseJson.status} (${responseJson.error})`;
+    }
   } else {
-    document.getElementById(
-      "postStatus"
-    ).innerText = `Status: ${responseJson.status} (${responseJson.error})`;
+    let responseJson = await fetchJSON(`api/business`, {
+      method: "POST",
+      body: { businessName: businessName},
+    });
+    console.log("response received. successfully saved business");
+  
+    if (responseJson.status == "success") {
+      document.getElementById(
+        "postStatus"
+      ).innerText = `Status: ${responseJson.status}`;
+    } else {
+      document.getElementById(
+        "postStatus"
+      ).innerText = `Status: ${responseJson.status} (${responseJson.error})`;
+    }
   }
+  
 
+
+  
   loadBusinesses();
 }
 
