@@ -106,6 +106,7 @@ async function addBusinessEarnings() {
         "add_business_earnings_status"
       ).innerText = ` Update Business Earnings: ${responseJson.status}`;
     }
+    document.getElementById("business_earnings_input").value = "";
     loadBusinessInfo();
   } catch (error) {
     console.log("Error adding business earnings");
@@ -215,6 +216,10 @@ async function addEmployee() {
     },
   });
   console.log(responseJson.status);
+  document.getElementById("employee_first_name").value = "";
+  document.getElementById("employee_last_name").value = "";
+  document.getElementById("hourly_wage").value = "";
+  document.getElementById("hours_worked").value = "";
 
   if (responseJson.status == "success") {
     document.getElementById(
