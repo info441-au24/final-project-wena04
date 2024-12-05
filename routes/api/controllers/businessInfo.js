@@ -1,5 +1,10 @@
 import express from "express";
 var router = express.Router();
+import fs from 'fs';
+import path from 'path';
+import filePath from 'url'
+const __filename = filePath.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // GET current business information
 router.get("/", async (req, res) => {
@@ -52,6 +57,14 @@ router.delete("/", async (req, res) => {
   console.log("entering delete for businessInfo")
   try {
     const { businessID } = req.body;
+    const business = await req.models.Business.findById(businessID)
+
+    //check if file exists (if businesss has logo
+    const logoFilePath = path.join(__dirname, "../../../public", business.logo)
+    if (business.logo) {
+      await fs.promises.unlink(logoFilePath)
+    }
+
   
 
     if (!req.session.isAuthenticated) {
