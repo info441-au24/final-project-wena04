@@ -73,7 +73,7 @@ async function loadBusinesses() {
               </p>
               <a href="/businessInfo.html?businessID=${encodeURIComponent(
                 business._id
-              )}" class="btn btn-primary">Manage Business</a>
+              )}" class="btn btn-primary mb-3">Manage Business</a>
               ${loadLogo(business.logo)}
             </div>
           </div>
@@ -90,8 +90,7 @@ async function loadBusinesses() {
 
 function loadLogo(businessLogo) {
   if (businessLogo) {
-    return `<img src="${businessLogo}" class="img-fluid card-img-top">
-`
+    return `<img src="${businessLogo}" class="img-fluid card-img-top">`
   } else {
     return ``
   }
