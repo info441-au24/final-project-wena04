@@ -13,11 +13,8 @@ console.log("successfully connected to mongodb");
 const businessSchema = new mongoose.Schema({
   businessName: String,
   username: String,
-
-  // also don't think we need this earning field as we can calculate it
-  // by doing some math on like all the employees and their hours and such
   earnings: Number,
-  logo: String
+  logo: String,
 });
 
 models.Business = mongoose.model("Business", businessSchema);
@@ -30,8 +27,6 @@ const employeeSchema = new mongoose.Schema({
   hourlyWage: Number,
   hoursWorked: Number,
   businessID: { type: mongoose.Schema.Types.ObjectId, ref: "Business" },
-  // for the p2 functions later if we want to do them
-  // date: { type: Date, default: Date.now },
 });
 
 models.Employee = mongoose.model("Employee", employeeSchema);
