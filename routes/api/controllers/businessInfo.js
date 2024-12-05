@@ -51,6 +51,7 @@ router.delete("/", async (req, res) => {
   console.log("request body", req.body);
   try {
     const { businessID } = req.body;
+  
 
     if (!req.session.isAuthenticated) {
       return res.status(401).json({
@@ -61,6 +62,7 @@ router.delete("/", async (req, res) => {
 
     await req.models.Employee.deleteMany({businessID: businessID})
     const deleteResult = await req.models.Business.deleteOne({ _id: businessID})
+    console.log(deleteResult)
 
     console.log(`successfully deleted business with ID: ${businessID}`);
 
@@ -76,5 +78,7 @@ router.delete("/", async (req, res) => {
     })
   }
 })
+
+
 
 export default router;
