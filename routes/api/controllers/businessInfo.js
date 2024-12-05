@@ -60,8 +60,9 @@ router.delete("/", async (req, res) => {
     const business = await req.models.Business.findById(businessID)
 
     //check if file exists (if businesss has logo
-    const logoFilePath = path.join(__dirname, "../../../public", business.logo)
+   
     if (business.logo) {
+      const logoFilePath = path.join(__dirname, "../../../public", business.logo)
       await fs.promises.unlink(logoFilePath)
     }
 
