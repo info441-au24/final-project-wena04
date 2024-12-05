@@ -3,6 +3,8 @@ This is the INFO 441 final project proposal for Group 8.
 
 By: Michaelangelo Labrador, Hyejin Park, Anthony Wen, Jasmine Wong
 
+** Link: https://business-management-tool.onrender.com/ **
+
 ## Project Description
 
 #### Who is your target audience?  Who do you envision using your application? Depending on the domain of your application, there may be a variety of audiences interested in using your application.  You should hone in on one of these audiences.
