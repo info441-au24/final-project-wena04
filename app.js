@@ -1,4 +1,5 @@
 import express from "express";
+import serveFavicon from "serve-favicon";
 import path from "path";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
@@ -34,7 +35,10 @@ import apiRouter from "./routes/api/api.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
+
 var app = express();
+app.use(serveFavicon(path.join(__dirname, "public", "favicon.ico")));
+
 
 app.enable("trust proxy");
 app.use(logger("dev"));
