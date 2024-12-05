@@ -3,7 +3,7 @@ This is the INFO 441 final project proposal for Group 8.
 
 By: Michaelangelo Labrador, Hyejin Park, Anthony Wen, Jasmine Wong
 
-** Link: https://business-management-tool.onrender.com/ **
+**Link: https://business-management-tool.onrender.com/**
 
 ## Project Description
 
